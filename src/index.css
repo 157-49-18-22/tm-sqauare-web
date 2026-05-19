@@ -189,7 +189,7 @@ p { color: var(--text-muted); }
    Scroll-Fill Text Animation Classes
    ============================================================ */
 .scroll-fill-wrapper {
-  position: relative;
+  position: relative; 
   display: inline-block;
   vertical-align: top;
   line-height: inherit;
