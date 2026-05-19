@@ -72,7 +72,7 @@ function App() {
         cartItemsCount={cartItemsCount}
       />
 
-      <main style={{ paddingTop: currentPage === 'home' ? 0 : 100, minHeight: '100vh' }}>
+      <main style={{ paddingTop: ['home', 'contact', 'paper', 'tpms', 'fastag'].includes(currentPage) ? 0 : 100, minHeight: '100vh' }}>
         {renderContent()}
       </main>
 

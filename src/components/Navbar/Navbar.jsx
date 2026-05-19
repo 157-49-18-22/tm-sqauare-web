@@ -4,6 +4,7 @@ const Navbar = ({ currentPage, setCurrentPage, cartItemsCount }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
+  const [dropdownTimer, setDropdownTimer] = useState(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -11,7 +12,24 @@ const Navbar = ({ currentPage, setCurrentPage, cartItemsCount }) => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const go = (page) => { setCurrentPage(page); setMobileOpen(false); setProductsOpen(false); };
+  const handleMouseEnter = () => {
+    if (dropdownTimer) clearTimeout(dropdownTimer);
+    setProductsOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    const timer = setTimeout(() => {
+      setProductsOpen(false);
+    }, 450); // 450ms delay
+    setDropdownTimer(timer);
+  };
+
+  const go = (page) => { 
+    if (dropdownTimer) clearTimeout(dropdownTimer);
+    setCurrentPage(page); 
+    setMobileOpen(false); 
+    setProductsOpen(false); 
+  };
 
   return (
     <header
@@ -23,11 +41,11 @@ const Navbar = ({ currentPage, setCurrentPage, cartItemsCount }) => {
         zIndex: 100,
         width: 'calc(100% - 40px)',
         maxWidth: 1200,
-        background: scrolled ? 'rgba(10,10,10,0.95)' : 'rgba(10,10,10,0.82)',
-        border: '1px solid rgba(255,255,255,0.08)',
-        backdropFilter: 'blur(16px)',
+        background: scrolled ? 'rgba(10,10,10,0.92)' : 'transparent',
+        border: scrolled ? '1px solid rgba(255,255,255,0.08)' : '1px solid transparent',
+        backdropFilter: scrolled ? 'blur(20px)' : 'none',
         borderRadius: '50px',
-        boxShadow: '0 20px 40px rgba(0,0,0,0.5)',
+        boxShadow: scrolled ? '0 20px 40px rgba(0,0,0,0.5)' : 'none',
         transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
       }}
     >
@@ -100,8 +118,8 @@ const Navbar = ({ currentPage, setCurrentPage, cartItemsCount }) => {
           {/* Products Dropdown */}
           <div
             style={{ position:'relative' }}
-            onMouseEnter={() => setProductsOpen(true)}
-            onMouseLeave={() => setProductsOpen(false)}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           >
             <button
               onClick={() => go('products')}
