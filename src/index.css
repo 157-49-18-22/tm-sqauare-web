@@ -1,0 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap');
+
+/* ============================================================
+   CSS Design Tokens — k3studios-inspired dark theme
+   ============================================================ */
+:root {
+  --bg:         #0a0a0a;
+  --bg-card:    #111111;
+  --bg-card2:   #161616;
+  --accent:     #1EA1B6;
+  --accent-dim: rgba(30,161,182,0.12);
+  --text:       #f5f5f5;
+  --text-muted: #888888;
+  --text-dim:   #444444;
+  --border:     rgba(255,255,255,0.07);
+  --border-accent: rgba(30,161,182,0.4);
+  --radius-sm:  6px;
+  --radius-md:  12px;
+
+  /* keep legacy vars for non-home pages */
+  --primary: #1EA1B6;
+  --primary-rgb: 30,161,182;
+  --primary-hover: #157B8C;
+  --secondary: #888;
+  --bg-app: #0a0a0a;
+  --bg-navbar: rgba(10,10,10,0.9);
+  --border-color: rgba(255,255,255,0.07);
+  --text-main: #f5f5f5;
+  --text-muted: #888888;
+  --glass-shadow: rgba(0,0,0,0.6);
+  --shadow-sm:  0 1px 3px rgba(0,0,0,0.6);
+  --shadow-md:  0 4px 20px rgba(0,0,0,0.5);
+  --shadow-lg:  0 10px 40px rgba(0,0,0,0.6);
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --radius-full: 9999px;
+  --transition-fast: 0.2s cubic-bezier(0.4,0,0.2,1);
+  --transition-normal: 0.3s cubic-bezier(0.4,0,0.2,1);
+  --transition-slow: 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ============================================================
+   Global Reset
+   ============================================================ */
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'Inter',system-ui,sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+#root { min-height:100vh; display:flex; flex-direction:column; }
+a { color:inherit; text-decoration:none; transition:color var(--transition-fast); }
+button,input,textarea,select { font-family:inherit; font-size:inherit; }
+img { display:block; max-width:100%; }
+
+/* ============================================================
+   Scrollbar
+   ============================================================ */
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--accent); border-radius:99px; }
+
+/* ============================================================
+   Typography
+   ============================================================ */
+.font-display {
+  font-family:'Bebas Neue',sans-serif;
+  letter-spacing:0.02em;
+  line-height:0.95;
+}
+h1,h2,h3,h4,h5,h6 {
+  font-weight:700;
+  line-height:1.2;
+  color: var(--text);
+}
+p { color: var(--text-muted); }
+
+/* ============================================================
+   Layout
+   ============================================================ */
+.container {
+  width:100%;
+  max-width:1280px;
+  margin:0 auto;
+  padding:0 32px;
+  position:relative;
+}
+
+/* ============================================================
+   Shared Buttons
+   ============================================================ */
+.btn {
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  font-weight:600; font-size:0.85rem; letter-spacing:0.08em;
+  padding:14px 28px; border-radius:var(--radius-sm);
+  border:1px solid transparent; cursor:pointer;
+  text-transform:uppercase;
+  transition:all var(--transition-fast);
+}
+.btn-primary   { background:var(--accent); color:#fff; border-color:var(--accent); }
+.btn-primary:hover { background:var(--primary-hover); border-color:var(--primary-hover); transform:translateY(-2px); }
+.btn-ghost     { background:transparent; color:var(--text); border-color:var(--border); }
+.btn-ghost:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
+.btn-accent    { background:var(--accent); color:#fff; }
+.btn-secondary { background:transparent; color:var(--text); border-color:var(--border); }
+
+/* ============================================================
+   Form utilities (used by Quote / Contact)
+   ============================================================ */
+.form-control {
+  padding:14px 16px;
+  border-radius:var(--radius-sm);
+  background:var(--bg-card2);
+  border:1px solid var(--border);
+  color:var(--text);
+  outline:none;
+  width:100%;
+  transition:border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+.form-control:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(30,161,182,0.15); }
+.form-control::placeholder { color:var(--text-dim); }
+
+/* ============================================================
+   Animations
+   ============================================================ */
+@keyframes fadeInUp {
+  from { opacity:0; transform:translateY(24px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.fade-in-up { animation:fadeInUp 0.7s cubic-bezier(0.16,1,0.3,1) forwards; }
+
+@keyframes fadeIn {
+  from { opacity:0; transform:translateY(-8px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.animate-fadeIn { animation:fadeIn 0.2s ease-out forwards; }
+
+@keyframes marquee {
+  0%   { transform:translateX(0); }
+  100% { transform:translateX(-50%); }
+}
+.marquee-inner { display:flex; gap:0; animation:marquee 20s linear infinite; white-space:nowrap; }
+.marquee-inner:hover { animation-play-state:paused; }
+
+@keyframes countUp {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.count-anim { animation:countUp 0.8s cubic-bezier(0.16,1,0.3,1) both; }
+
+/* ============================================================
+   Shared utilities
+   ============================================================ */
+.badge {
+  display:inline-flex; padding:5px 12px;
+  border-radius:var(--radius-sm);
+  font-size:0.7rem; font-weight:700;
+  text-transform:uppercase; letter-spacing:0.12em;
+}
+.badge-accent { background:var(--accent-dim); color:var(--accent); border:1px solid var(--border-accent); }
+
+.section-label {
+  font-size:0.7rem; font-weight:700; letter-spacing:0.2em;
+  text-transform:uppercase; color:var(--accent);
+  display:block; margin-bottom:16px;
+}
+
+/* glass-panel kept for non-home pages */
+.glass-panel {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-md);
+  box-shadow:var(--shadow-md);
+}
+
+/* active nav helper (legacy pages) */
+.active-nav-link { color:var(--accent)!important; font-weight:700!important; }
+
+/* Material Symbols */
+.material-symbols-outlined {
+  font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 48;
+  vertical-align:middle; line-height:1;
+}
