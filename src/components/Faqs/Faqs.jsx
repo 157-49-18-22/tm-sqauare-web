@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Faqs.css';
 
 const CATEGORIES = [
@@ -45,6 +45,25 @@ const Faqs = () => {
   const [activeCat, setActiveCat] = useState('all');
   const [openIdx, setOpenIdx] = useState(null);
 
+  const headerRef = useRef(null);
+  const [fillProgress, setFillProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!headerRef.current) return;
+      const rect = headerRef.current.getBoundingClientRect();
+      const winH = window.innerHeight;
+      const start = winH * 1.0;
+      const end = winH * 0.1;
+      const current = rect.bottom;
+      const progress = Math.max(0, Math.min(1, (start - current) / (start - end)));
+      setFillProgress(progress);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const toggle = idx => {
     setOpenIdx(openIdx === idx ? null : idx);
   };
@@ -62,7 +81,16 @@ const Faqs = () => {
         <div className="faqs-header">
           <span className="faqs-subtitle">CUSTOMER INQUIRIES</span>
           <h2 className="faqs-title">
-            FREQUENTLY ASKED <span className="faqs-title-accent">QUESTIONS</span>
+            FREQUENTLY ASKED{' '}
+            <span className="scroll-fill-wrapper" ref={headerRef}>
+              <span className="scroll-fill-bg">QUESTIONS</span>
+              <span 
+                className="scroll-fill-fg"
+                style={{ clipPath: `inset(0 ${(1 - fillProgress) * 100}% 0 0)` }}
+              >
+                QUESTIONS
+              </span>
+            </span>
           </h2>
         </div>
 

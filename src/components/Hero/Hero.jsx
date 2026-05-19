@@ -1,4 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
+import copierPaperHero from '../../assets/copier_paper_hero.png';
+import tpmsSensorsHero from '../../assets/tpms_sensors_hero.png';
+import fastagPlazaHero from '../../assets/fastag_plaza_hero.png';
 
 const slides = [
   {
@@ -8,7 +11,7 @@ const slides = [
     subtitle: 'PREMIUM PRINT SHEETS',
     desc: 'Engineered for high-speed commercial printers. Zero jamming guaranteed with ultra-crisp contrast and premium GSM density.',
     btn: 'Explore Paper', page: 'paper', num: '01',
-    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBu71OhkCj8PNbFN3NK67_3RWInZezaMOcCQWVHzbsBlX-RvM345nEIhsDtAbbgeIo-7TsnDOoGrTKmF6O0Ztq5y8suCR9MWpEVUehpCPWe8QMgLG7Yw76J-3lFDw-_hux6PMudJSN3KJJYQRZjdsVRfGR0FRp5KjQZrWEov6e3dw9ua6bJm-MEmfq7-0fDPV-ju-sdQACLr-zZx48-qR-bEeZcT5jH-lKhRqkZwRWHVNzjYYWCkwVufTkN84sQ3-LOq1yG5NhFwco'
+    img: copierPaperHero
   },
   {
     id: 1, 
@@ -17,7 +20,7 @@ const slides = [
     subtitle: 'REAL-TIME TYRE PROTECTION',
     desc: 'Solar-powered active monitoring system delivering real-time tire pressure and thermal diagnostics directly to your cockpit.',
     btn: 'Explore TPMS', page: 'tpms', num: '02',
-    img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&q=80&w=1600'
+    img: tpmsSensorsHero
   },
   {
     id: 2, 
@@ -26,7 +29,7 @@ const slides = [
     subtitle: 'CASHLESS HIGHWAY PASS',
     desc: 'Instant cashless electronic toll collection coupled with exclusive HPCL fuel savings across nationwide transit routes.',
     btn: 'Get FASTag', page: 'fastag', num: '03',
-    img: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&q=80&w=1600'
+    img: fastagPlazaHero
   }
 ];
 

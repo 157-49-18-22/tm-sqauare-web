@@ -1,4 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
+import copierPaperHero from '../../assets/copier_paper_hero.png';
+import tpmsSensorsHero from '../../assets/tpms_sensors_hero.png';
+import fastagPlazaHero from '../../assets/fastag_plaza_hero.png';
 
 const PRODUCTS = [
   {
@@ -8,7 +11,7 @@ const PRODUCTS = [
     specs: ['Solar Charged', '4 External Sensors', 'IP67 Waterproof', 'Real-time Alarm'],
     price: '₹2,500', unit: '/ unit kit',
     page: 'tpms',
-    img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&q=80&w=900',
+    img: tpmsSensorsHero,
   },
   {
     num: '02', badge: 'OFFICE SUPPLIES',
@@ -17,7 +20,7 @@ const PRODUCTS = [
     specs: ['A4, A3 & FS Sizes', '70–85 GSM', 'Jam-Free Tech', 'High Whiteness'],
     price: 'Get Quote', unit: '/ bulk order',
     page: 'paper',
-    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBu71OhkCj8PNbFN3NK67_3RWInZezaMOcCQWVHzbsBlX-RvM345nEIhsDtAbbgeIo-7TsnDOoGrTKmF6O0Ztq5y8suCR9MWpEVUehpCPWe8QMgLG7Yw76J-3lFDw-_hux6PMudJSN3KJJYQRZjdsVRfGR0FRp5KjQZrWEov6e3dw9ua6bJm-MEmfq7-0fDPV-ju-sdQACLr-zZx48-qR-bEeZcT5jH-lKhRqkZwRWHVNzjYYWCkwVufTkN84sQ3-LOq1yG5NhFwco',
+    img: copierPaperHero,
   },
   {
     num: '03', badge: 'RFID SERVICES',
@@ -26,7 +29,7 @@ const PRODUCTS = [
     specs: ['Instant Approval', 'Fuel & Toll Pay', 'Auto-renew Pass', '99% Coverage'],
     price: '₹149', unit: '/ promo offer',
     page: 'fastag',
-    img: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&q=80&w=900',
+    img: fastagPlazaHero,
   },
 ];
 

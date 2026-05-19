@@ -1,10 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Calculator.css';
 
 const Calculator = () => {
   const [activeTab, setActiveTab] = useState('tpms'); // 'tpms' or 'fuel'
   const [trucks, setTrucks] = useState(15);
   const [fuelSpend, setFuelSpend] = useState(250000); // monthly fuel spend in INR
+
+  const headerRef = useRef(null);
+  const [fillProgress, setFillProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!headerRef.current) return;
+      const rect = headerRef.current.getBoundingClientRect();
+      const winH = window.innerHeight;
+      const start = winH * 1.0;
+      const end = winH * 0.1;
+      const current = rect.bottom;
+      const progress = Math.max(0, Math.min(1, (start - current) / (start - end)));
+      setFillProgress(progress);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // TPMS Savings Calculations
   const tyreSavings = trucks * 18000; // Rs 18,000 saved per truck per year on tyres
@@ -28,7 +47,16 @@ const Calculator = () => {
         <div className="calculator-header">
           <span className="calculator-subtitle">ROI CALCULATOR</span>
           <h2 className="calculator-title">
-            ESTIMATE YOUR <span className="calculator-title-accent">ANNUAL SAVINGS</span>
+            ESTIMATE YOUR{' '}
+            <span className="scroll-fill-wrapper" ref={headerRef}>
+              <span className="scroll-fill-bg">ANNUAL SAVINGS</span>
+              <span 
+                className="scroll-fill-fg"
+                style={{ clipPath: `inset(0 ${(1 - fillProgress) * 100}% 0 0)` }}
+              >
+                ANNUAL SAVINGS
+              </span>
+            </span>
           </h2>
           <p className="calculator-desc">
             Adjust the sliders below to calculate how much your organization can save by partnering with TM Square Global Solutions.

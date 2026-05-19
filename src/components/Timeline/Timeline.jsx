@@ -30,7 +30,9 @@ const STEPS = [
 
 const Timeline = () => {
   const containerRef = useRef(null);
+  const headerRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [fillProgress, setFillProgress] = useState(0);
   const [inView, setInView] = useState(false);
 
   useEffect(() => {
@@ -58,12 +60,26 @@ const Timeline = () => {
       setScrollProgress(progress);
     };
 
+    const handleHeaderScroll = () => {
+      if (!headerRef.current) return;
+      const rect = headerRef.current.getBoundingClientRect();
+      const winH = window.innerHeight;
+      const start = winH * 1.0;
+      const end = winH * 0.1;
+      const current = rect.bottom;
+      const progress = Math.max(0, Math.min(1, (start - current) / (start - end)));
+      setFillProgress(progress);
+    };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('scroll', handleHeaderScroll, { passive: true });
     handleScroll();
+    handleHeaderScroll();
 
     return () => {
       observer.disconnect();
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', handleHeaderScroll);
     };
   }, []);
 
@@ -81,7 +97,16 @@ const Timeline = () => {
         >
           <span className="timeline-subtitle">OPERATIONAL WORKFLOW</span>
           <h2 className="timeline-title">
-            HOW WE DELIVER <span className="timeline-title-accent">EXCELLENCE</span>
+            HOW WE DELIVER{' '}
+            <span className="scroll-fill-wrapper" ref={headerRef}>
+              <span className="scroll-fill-bg">EXCELLENCE</span>
+              <span 
+                className="scroll-fill-fg"
+                style={{ clipPath: `inset(0 ${(1 - fillProgress) * 100}% 0 0)` }}
+              >
+                EXCELLENCE
+              </span>
+            </span>
           </h2>
           <p className="timeline-desc">
             A structured, quality-controlled, and seamless implementation strategy designed for long-term reliability.
