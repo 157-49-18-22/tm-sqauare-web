@@ -15,8 +15,9 @@
 
   background: #07070a;
   color: #fff;
-  overflow: clip;
-  /* clip = visual clipping WITHOUT blocking sticky children */
+  overflow-x: clip;
+  overflow-y: visible;
+  /* overflow-x: clip prevents horizontal page layout breakage while keeping overflow-y visible for sticky timeline */
   font-family: var(--font-sans, 'Inter', sans-serif);
 }
 
@@ -1165,6 +1166,10 @@
     margin: 0 auto 48px;
   }
 
+  .av-hero-img-frame {
+    margin-left: 0;
+  }
+
   .av-hero {
     max-width: 100%;
     margin-bottom: 80px;
@@ -1178,6 +1183,8 @@
 
   .av-team-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 0 12px;
   }
 
   .av-story-inner {
@@ -1192,6 +1199,87 @@
   .av-pillars-grid {
     grid-template-columns: 1fr;
     gap: 20px;
+  }
+}
+
+@media (max-width:768px) {
+  .av-tl-header {
+    position: absolute;
+    top: 5%;
+    bottom: auto;
+    left: 16px;
+    right: 16px;
+    max-width: 100%;
+    text-align: center;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+  }
+  
+  .av-tl-header .av-badge {
+    margin-bottom: 8px;
+  }
+
+  .av-tl-header .av-sec-title {
+    font-size: clamp(1.6rem, 5vw, 2rem);
+    margin: 0;
+  }
+
+  .av-tl-hint {
+    margin-top: 6px;
+    font-size: 0.78rem;
+  }
+
+  .av-tl-progress-wrap {
+    right: 50%;
+    transform: translateX(50%);
+    bottom: 5%;
+    width: 150px;
+  }
+
+  .av-tl-card {
+    width: clamp(260px, 78vw, 300px);
+    padding: 18px 20px;
+  }
+
+  .node-above .av-tl-card {
+    bottom: 48px;
+  }
+
+  .node-below .av-tl-card {
+    top: 48px;
+  }
+
+  .av-tl-head {
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+  }
+
+  .av-tl-desc {
+    font-size: 0.76rem;
+  }
+
+  .av-tl-vehicle {
+    width: 110px;
+    height: 70px;
+  }
+
+  /* Pillars and team cards padding */
+  .av-pillar-card {
+    padding: 28px 20px;
+  }
+
+  .av-team-card {
+    padding: 24px;
+    height: 380px;
+  }
+
+  .av-team-desc {
+    opacity: 1;
+    transform: translateY(0);
+    margin-top: 8px;
   }
 }
 
@@ -1210,10 +1298,12 @@
 
   .av-team-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .av-story-right {
     padding: 32px 24px;
+    min-height: 280px;
   }
 
   .av-faq-q {
@@ -1233,3 +1323,4 @@
     padding: 60px 24px;
   }
 }
+

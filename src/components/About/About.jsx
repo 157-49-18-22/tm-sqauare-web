@@ -10,6 +10,16 @@ const About = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [lottieLoaded, setLottieLoaded] = useState(false);
   const lottieAnimRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   /* av-reveal animations handled globally by SmoothScroll */
 
@@ -76,8 +86,16 @@ const About = () => {
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+    // Call once initially to lay out progress correctly
+    onScroll();
+    // Also request an animation frame to run once layout dimensions are established
+    const rafId = requestAnimationFrame(onScroll);
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(rafId);
+    };
+  }, [isMobile]);
 
   const storySlides = [
     { quote: "TM Square started with a simple observation: core business operations—highway tolling, transit safety, and daily documentation—were still running on disjointed systems that couldn't scale.", sub: "Most tools were hard to deploy and even harder to trust at scale." },
@@ -101,6 +119,10 @@ const About = () => {
     { name: "Amir Ahani", role: "Senior Software Engineer", img: "/team_engineer.png", desc: "Amir manages our front-end interfaces, telemetry feeds, and real-time support systems." }
   ];
 
+
+  const startOffset = isMobile ? 180 : 600;
+  const spacing = isMobile ? 360 : 550;
+  const totalTravel = spacing * (timeline.length - 1);
 
   return (
     <div className="av-root">
@@ -200,7 +222,11 @@ const About = () => {
 
           {/* Timeline Viewport */}
           <div className="av-tl-viewport">
-            <div className="av-tl-track" ref={tlTrackRef}>
+            <div
+              className="av-tl-track"
+              ref={tlTrackRef}
+              style={{ width: `${startOffset + totalTravel + (isMobile ? 320 : 600)}px` }}
+            >
               {/* Continuous horizontal baseline */}
               <div className="av-tl-line"></div>
 
@@ -208,7 +234,7 @@ const About = () => {
               <div
                 id="lottie-vehicle"
                 className="av-tl-vehicle"
-                style={{ left: `${600 + scrollProgress * 2200}px` }}
+                style={{ left: `${startOffset + scrollProgress * totalTravel}px` }}
               ></div>
 
               {timeline.map((item, i) => {
@@ -217,7 +243,7 @@ const About = () => {
                   <div
                     key={i}
                     className={`av-tl-node ${isAbove ? 'node-above' : 'node-below'}`}
-                    style={{ left: `${600 + i * 550}px` }}
+                    style={{ left: `${startOffset + i * spacing}px` }}
                   >
                     {/* Glassmorphic Card */}
                     <div className="av-tl-card">
