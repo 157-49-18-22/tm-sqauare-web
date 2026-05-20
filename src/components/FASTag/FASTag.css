@@ -1,148 +1,811 @@
-.page-header {
-  padding: 100px 0 60px 0;
-  background: radial-gradient(circle at 50% -20%, rgba(14, 165, 233, 0.15), rgba(3, 7, 18, 0));
+/* FASTag.css - Premium Velocity Design (Full-Width Responsive Edition) */
+
+/* Colors and custom vars local to fastag page */
+.fastag-page {
+  --ft-bg: #101415;
+  --ft-on-surface: #e0e3e5;
+  --ft-primary: #dbfcff;
+  --ft-primary-container: #00f0ff;
+  --ft-on-primary-fixed: #002022;
+  --ft-text-muted: #b9cacb;
+  --ft-border: rgba(255, 255, 255, 0.08);
+  --ft-border-glow: rgba(0, 240, 255, 0.15);
+  
+  background-color: var(--ft-bg);
+  color: var(--ft-on-surface);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  padding: 140px 0 80px; /* offset navbar */
+}
+
+.fastag-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(at 0% 0%, rgba(0, 240, 255, 0.06) 0px, transparent 50%),
+                    radial-gradient(at 100% 100%, rgba(0, 240, 255, 0.08) 0px, transparent 50%);
+  z-index: 0;
+}
+
+.fastag-page::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(0, 240, 255, 0.02) 1px, transparent 1px), 
+                    linear-gradient(90deg, rgba(0, 240, 255, 0.02) 1px, transparent 1px);
+  background-size: 32px 32px;
+  z-index: 0;
+  opacity: 0.8;
+}
+
+.fastag-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+
+/* Glass Card */
+.ft-glass-card {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--ft-border);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+  transition: all 0.4s ease;
+}
+
+.ft-glass-card:hover {
+  border-color: rgba(0, 240, 255, 0.25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 240, 255, 0.05);
+}
+
+/* Neon utilities */
+.ft-neon-glow {
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.15);
+}
+
+.ft-text-gradient {
+  background: linear-gradient(135deg, #dbfcff, #00f0ff, #00b4c1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Animations */
+@keyframes ftPulse {
+  0%, 100% {
+    opacity: 0.6;
+    box-shadow: 0 0 8px #00f0ff;
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 16px #00f0ff, 0 0 24px #00f0ff;
+  }
+}
+
+.ft-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--ft-primary-container);
+  animation: ftPulse 2s infinite ease-in-out;
+}
+
+/* Sections spacing */
+.ft-section {
+  width: 100%;
+}
+
+/* Hero Section */
+.ft-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  border-bottom: 1px solid var(--border-color);
+  gap: 40px;
+  width: 100%;
+  position: relative; /* to anchor the absolute Hyperspeed canvas */
+  overflow: hidden;
+  border-radius: 24px;
+  border: 1px solid var(--ft-border);
+  background: rgba(16, 20, 21, 0.45); /* translucent premium dark fill */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 48px 24px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.ft-hero-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 600px;
+  position: relative;
+  z-index: 2; /* sit cleanly on top of the animation */
+  pointer-events: auto;
+}
+
+.ft-hero-visual-side {
+  flex: 1;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 2; /* sit cleanly on top of the animation */
+  pointer-events: auto;
+}
+
+.ft-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  background: rgba(0, 240, 255, 0.06);
+  color: var(--ft-primary-container);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.05);
+}
+
+.ft-hero-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 16px;
+  color: #fff;
+}
+
+.ft-hero-subtitle {
+  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+  color: var(--ft-text-muted);
+  max-width: 500px;
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+
+/* Promo Card */
+.ft-promo-card {
+  width: 100%;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: default;
   position: relative;
   overflow: hidden;
 }
 
-.page-header::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
-  background-size: 40px 40px;
-  opacity: 0.3;
-  z-index: -1;
-}
-
-.header-badge {
-  display: inline-block;
-  padding: 8px 16px;
-  background: rgba(16, 185, 129, 0.1);
-  color: var(--accent);
-  font-weight: 700;
-  font-size: 0.9rem;
-  border-radius: var(--radius-full);
-  margin-bottom: 20px;
-  border: 1px solid rgba(16, 185, 129, 0.2);
-}
-
-.page-title {
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  font-weight: 800;
-  line-height: 1.1;
-  margin-bottom: 24px;
-  background: linear-gradient(135deg, var(--text-main), var(--text-muted));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.page-title-highlight {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.page-subtitle {
-  font-size: 1.2rem;
-  color: var(--text-muted);
-  max-width: 600px;
-  margin: 0 auto 40px auto;
-  line-height: 1.6;
-}
-
-.pricing-box {
-  display: inline-flex;
-  align-items: center;
-  gap: 20px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  padding: 16px 32px;
-  border-radius: var(--radius-full);
-  box-shadow: var(--shadow-lg);
-  margin-bottom: 40px;
-}
-
-.price-value {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: var(--primary);
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.price-currency {
-  font-size: 1.4rem;
-  color: var(--text-muted);
-}
-
-.price-divider {
-  width: 1px;
-  height: 40px;
-  background: var(--border-color);
-}
-
-.benefits-section {
-  padding: 100px 0;
-  background: var(--bg-app);
-}
-
-.benefits-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 32px;
-  margin-top: 60px;
-}
-
-.benefit-card {
-  padding: 40px;
-  border-radius: var(--radius-md);
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  transition: all var(--transition-normal);
+.ft-promo-info {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  align-items: flex-start;
+  z-index: 2;
 }
 
-.benefit-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(16, 185, 129, 0.4);
-  box-shadow: 0 10px 30px rgba(16, 185, 129, 0.1);
+.ft-promo-tag {
+  color: rgba(0, 240, 255, 0.7);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 4px;
 }
 
-.benefit-icon {
-  width: 50px;
-  height: 50px;
-  border-radius: var(--radius-full);
-  background: rgba(16, 185, 129, 0.1);
-  color: var(--accent);
+.ft-promo-price-container {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.ft-promo-price {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--ft-primary-container);
+  font-family: 'Outfit', sans-serif;
+}
+
+.ft-promo-old-price {
+  color: rgba(224, 227, 229, 0.3);
+  text-decoration: line-through;
+  font-size: 0.95rem;
+}
+
+.ft-promo-visual {
+  position: relative;
+  width: 130px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.ft-promo-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.25) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: scale(1.3);
+  filter: blur(8px);
+  pointer-events: none;
+  transition: transform 0.6s ease;
+}
+
+.ft-promo-card:hover .ft-promo-glow {
+  transform: scale(1.6);
+}
+
+.ft-car-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: rotate(15deg);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ft-promo-card:hover .ft-car-img {
+  transform: rotate(0deg) scale(1.08);
+}
+
+/* Primary CTA Button */
+.ft-btn-whatsapp {
+  width: 100%;
+  background: linear-gradient(135deg, #00f0ff, #00dbe9, #00b4c1);
+  color: #002022;
+  padding: 16px 28px;
+  border-radius: 16px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  text-decoration: none;
+}
+
+.ft-btn-whatsapp:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 35px rgba(0, 240, 255, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.ft-btn-whatsapp:active {
+  transform: translateY(1px);
+}
+
+/* Trust Banner */
+.ft-trust-banner {
+  width: 100%;
+}
+
+.ft-trust-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  width: 100%;
+}
+
+.ft-trust-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.ft-trust-icon {
+  color: var(--ft-primary-container);
+  font-size: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.benefit-title {
-  font-size: 1.25rem;
+.ft-trust-label {
+  font-size: 10px;
   font-weight: 700;
-  color: var(--text-main);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ft-text-muted);
 }
 
-.benefit-desc {
-  color: var(--text-muted);
-  line-height: 1.6;
+.ft-trust-divider {
+  width: 1px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 0 10px;
 }
 
-.cta-section {
-  padding: 80px 0;
+/* Why choose us? Bento style */
+.ft-section-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
   text-align: center;
-  background: linear-gradient(135deg, rgba(14, 165, 233, 0.05), rgba(16, 185, 129, 0.05));
-  border-top: 1px solid var(--border-color);
-  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 32px;
+  letter-spacing: -0.01em;
+}
+
+.ft-bento-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  width: 100%;
+}
+
+.ft-bento-card {
+  padding: 24px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+
+.ft-bento-icon {
+  color: var(--ft-primary-container);
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.ft-bento-heading {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ft-primary);
+  line-height: 1.3;
+}
+
+.ft-bento-desc {
+  font-size: 13px;
+  color: var(--ft-text-muted);
+  line-height: 1.5;
+}
+
+/* Price Calculator */
+.ft-calc-card {
+  width: 100%;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.ft-calc-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ft-calc-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--ft-text-muted);
+}
+
+.ft-calc-tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.ft-calc-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.ft-calc-tab-btn {
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid var(--ft-border);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--ft-on-surface);
+}
+
+.ft-calc-tab-btn.active {
+  background: var(--ft-primary-container);
+  color: var(--ft-on-primary-fixed);
+  border-color: var(--ft-primary-container);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+}
+
+.ft-calc-details {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ft-calc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.ft-calc-row-discount {
+  color: var(--ft-primary-container);
+  font-weight: 700;
+}
+
+.ft-calc-total-label {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.ft-calc-total-price {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ft-primary-container);
+  font-family: 'Outfit', sans-serif;
+}
+
+/* ============================================================
+   ANIMATED VERTICAL TIMELINE
+   ============================================================ */
+.ft-timeline {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+@keyframes flowEnergy {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 0% -200%;
+  }
+}
+
+.ft-timeline::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: linear-gradient(to bottom, 
+    rgba(0, 240, 255, 0.1) 0%, 
+    #00f0ff 30%, 
+    #00b4c1 60%, 
+    rgba(0, 240, 255, 0.1) 100%);
+  background-size: 100% 200%;
+  animation: flowEnergy 4s linear infinite;
+  z-index: 1;
+}
+
+.ft-timeline-step {
+  position: relative;
+  padding-left: 56px;
+  width: 100%;
+  cursor: pointer;
+}
+
+@keyframes dotGlowPulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.3), 0 0 20px rgba(0, 240, 255, 0.1);
+    transform: translateY(-50%) scale(1);
+    background: var(--ft-primary-container);
+  }
+  50% {
+    box-shadow: 0 0 22px rgba(0, 240, 255, 0.7), 0 0 35px rgba(0, 240, 255, 0.3);
+    transform: translateY(-50%) scale(1.15);
+    background: #fff;
+  }
+}
+
+.ft-timeline-dot {
+  position: absolute;
+  left: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--ft-primary-container);
+  border: 4px solid var(--ft-bg);
+  z-index: 2;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: dotGlowPulse 3s infinite ease-in-out;
+}
+
+.ft-timeline-card {
+  padding: 24px;
+  border-radius: 16px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.ft-timeline-step-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ft-primary);
+  margin-bottom: 6px;
+}
+
+.ft-timeline-step-desc {
+  font-size: 13px;
+  color: var(--ft-text-muted);
+  line-height: 1.5;
+}
+
+.ft-timeline-step:hover .ft-timeline-card {
+  transform: translateX(8px);
+  border-color: rgba(0, 240, 255, 0.4);
+  background: rgba(0, 240, 255, 0.03);
+  box-shadow: 0 10px 30px rgba(0, 240, 255, 0.05);
+}
+
+.ft-timeline-step:hover .ft-timeline-dot {
+  background: #fff;
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.8), 0 0 35px #00f0ff;
+  border-color: var(--ft-primary-container);
+  transform: translateY(-50%) scale(1.25);
+  animation: none; /* pause standard pulse wave when hovered */
+}
+
+/* Reviews Carousel */
+.ft-reviews-container {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 0 4px 20px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.ft-reviews-container::-webkit-scrollbar {
+  display: none;
+}
+
+.ft-review-card {
+  min-width: 290px;
+  padding: 24px;
+  border-radius: 12px;
+  scroll-snap-align: center;
+  border-left: 4px solid var(--ft-primary-container);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.ft-stars {
+  display: flex;
+  gap: 4px;
+  color: var(--ft-primary-container);
+}
+
+.ft-stars span {
+  font-size: 18px;
+}
+
+.ft-review-text {
+  font-size: 13.5px;
+  color: var(--ft-on-surface);
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.ft-reviewer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ft-reviewer-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ft-reviewer-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ft-reviewer-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ft-on-surface);
+}
+
+.ft-reviewer-role {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ft-text-muted);
+}
+
+/* Final CTA Section */
+.ft-final-cta-card {
+  width: 100%;
+  padding: 48px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(0, 240, 255, 0.1);
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.06), transparent 70%);
+}
+
+.ft-final-cta-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(0, 240, 255, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.ft-final-cta-card h2 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 12px;
+  color: #fff;
+}
+
+.ft-final-cta-card p {
+  font-size: 14px;
+  color: var(--ft-text-muted);
+  margin-bottom: 28px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ft-btn-final {
+  background: var(--ft-primary-container);
+  color: var(--ft-on-primary-fixed);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 14px 28px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+  transition: all 0.3s ease;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.ft-btn-final:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
+}
+
+/* ============================================================
+   RESPONSIVENESS (SPACIOUS FULL-WIDTH OVERRIDES)
+   ============================================================ */
+
+/* Medium devices (Tablets) */
+@media (min-width: 768px) {
+  .ft-bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .ft-calc-card {
+    padding: 32px;
+  }
+}
+
+/* Large devices (Desktops) */
+@media (min-width: 1024px) {
+  .ft-hero {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    gap: 80px;
+    padding: 60px 48px;
+  }
+  
+  .ft-hero-content {
+    align-items: flex-start;
+    text-align: left;
+    max-width: 600px;
+  }
+  
+  .ft-hero-visual-side {
+    max-width: 460px;
+  }
+  
+  .ft-hero-subtitle {
+    margin-left: 0;
+  }
+  
+  .ft-btn-whatsapp {
+    width: auto;
+    min-width: 280px;
+  }
+  
+  /* Trust banner spanning full 100% of container */
+  .ft-trust-wrapper {
+    padding: 24px 60px;
+  }
+  
+  /* 4-column Bento grid across screen width */
+  .ft-bento-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  /* Spacious 2-column calculator layout */
+  .ft-calc-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  
+  .ft-calc-details {
+    border-top: none;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 0;
+    padding-left: 48px;
+    height: 100%;
+    justify-content: center;
+  }
+  
+  /* Multi-column reviews grid on desktop spanning full width */
+  .ft-reviews-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    overflow-x: visible;
+  }
+  
+  .ft-review-card {
+    min-width: 0;
+  }
+  
+  /* Sleek wide Final CTA */
+  .ft-final-cta-card {
+    padding: 64px 40px;
+  }
 }

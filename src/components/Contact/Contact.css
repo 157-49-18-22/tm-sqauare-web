@@ -8,11 +8,10 @@
 }
 
 /* ══════════════════════════════════════════
-   Lamp Hero – Framer Motion Animation
+   Contact Hero – LineWaves background
    ══════════════════════════════════════════ */
 
-/* Root wrapper */
-.lamp-root {
+.contact-hero {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -21,160 +20,42 @@
   height: 100vh;
   width: 100%;
   overflow: hidden;
-
-  background-image: url('/contact-hero-bg.png');
-  background-size: cover;
-  background-position: center bottom;
-  z-index: 0;
+  background: #030409;
 }
 
-.lamp-root::before {
-  content: '';
+.contact-hero-waves {
   position: absolute;
   inset: 0;
-  background: rgba(3, 4, 9, 0.4);
+  z-index: 0;
+  pointer-events: auto;
+}
+
+.contact-hero-overlay {
+  position: absolute;
+  inset: 0;
   z-index: 1;
   pointer-events: none;
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(3, 4, 9, 0.35) 0%, rgba(3, 4, 9, 0.75) 100%);
 }
 
-/* The stage holds all the glow layers — sits as absolute background above the ::before tint */
-.lamp-stage {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: scaleY(1.25);
-  isolation: isolate;
-  z-index: 2;
-}
-
-/* Conic gradient cones */
-
-
-
-/* Edge fade masks on cones */
-.lamp-fade-bottom {
-  position: absolute;
-  width: 100%;
-  left: 0;
-  bottom: 0;
-  height: 10rem;
-  background: rgba(3, 4, 9, 0.82);
-  z-index: 20;
-  -webkit-mask-image: linear-gradient(to top, white, transparent);
-  mask-image: linear-gradient(to top, white, transparent);
-}
-
-.lamp-fade-left {
-  position: absolute;
-  width: 10rem;
-  height: 100%;
-  left: 0;
-  bottom: 0;
-  background: rgba(3, 4, 9, 0.82);
-  z-index: 20;
-  -webkit-mask-image: linear-gradient(to right, white, transparent);
-  mask-image: linear-gradient(to right, white, transparent);
-}
-
-.lamp-fade-right {
-  position: absolute;
-  width: 10rem;
-  height: 100%;
-  right: 0;
-  bottom: 0;
-  background: rgba(3, 4, 9, 0.82);
-  z-index: 20;
-  -webkit-mask-image: linear-gradient(to left, white, transparent);
-  mask-image: linear-gradient(to left, white, transparent);
-}
-
-
-
-/* Big blur at the bottom of stage */
-.lamp-blur-base {
-  position: absolute;
-  top: 50%;
-  height: 12rem;
-  width: 100%;
-  transform: translateY(3rem) scaleX(1.5);
-  background: rgba(3, 4, 9, 0.82);
-  filter: blur(40px);
-  z-index: 10;
-}
-
-
-
-/* Main glow orb */
-.lamp-orb {
-  position: absolute;
-  inset: auto;
-  z-index: 50;
-  height: 9rem;
-  width: 28rem;
-  transform: translateY(-50%);
-  border-radius: 50%;
-  background: #1ea1b6;
-  opacity: 0.45;
-  filter: blur(60px);
-  top: 50%;
-}
-
-/* Inner bright beam */
-.lamp-beam-inner {
-  position: absolute;
-  inset: auto;
-  z-index: 30;
-  height: 9rem;
-  border-radius: 50%;
-  background: #1ea1b6;
-  filter: blur(32px);
-  transform: translateY(-6rem);
-  top: 50%;
-  opacity: 0.9;
-}
-
-/* Horizontal hairline at the top */
-.lamp-line {
-  position: absolute;
-  inset: auto;
-  z-index: 50;
-  height: 2px;
-  background: #1ea1b6;
-  transform: translateY(-18rem);
-  top: 50%;
-  box-shadow: 0 0 20px 2px rgba(30, 161, 182, 0.6);
-}
-
-/* Dark mask that hides everything above the beam */
-.lamp-mask-top {
-  position: absolute;
-  inset: auto;
-  z-index: 40;
-  height: 11rem;
-  width: 100%;
-  transform: translateY(-12.5rem);
-  background: rgba(3, 4, 9, 0.82);
-  top: 50%;
-  filter: blur(32px);
-}
-
-/* Content area — sits above all lamp layers, centered in the 100vh root */
-.lamp-content {
+.contact-hero-content {
   position: relative;
-  z-index: 50;
+  z-index: 10;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 0 20px;
   padding-top: 80px;
-  /* offset for fixed navbar */
   text-align: center;
   gap: 16px;
   max-width: 860px;
-  margin-top: -15vh;
+  margin-top: -8vh;
+  pointer-events: none;
+}
+
+.contact-hero-content > * {
+  pointer-events: auto;
 }
 
 /* ── Hero text styles ── */

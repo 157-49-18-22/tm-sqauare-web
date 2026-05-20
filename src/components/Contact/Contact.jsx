@@ -1,109 +1,34 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin, Send, CheckCircle2, MessageSquare, Clock } from 'lucide-react';
+import LineWaves from '../LineWaves/LineWaves';
 import './Contact.css';
 
-/* ─── Lamp Container (converted from Tailwind) ─── */
-const LampContainer = ({ children }) => {
-  return (
-    <div className="lamp-root">
-      {/* Lamp glow layer */}
-      <div className="lamp-stage">
-        {/* Left cone */}
-        <motion.div
-          initial={{ opacity: 0.3, width: '12rem' }}
-          whileInView={{ 
-            opacity: [0.7, 0.95, 0.7], 
-            width: ['28rem', '31rem', '28rem'] 
-          }}
-          viewport={{ once: false, amount: 0.1 }}
-          transition={{
-            delay: 0.2,
-            duration: 5,
-            repeat: Infinity,
-            ease: 'easeInOut'
-          }}
-          className="lamp-cone lamp-cone-right"
-        >
-          <div className="lamp-fade-bottom" />
-          <div className="lamp-fade-left" />
-        </motion.div>
-
-        {/* Right cone */}
-        <motion.div
-          initial={{ opacity: 0.3, width: '12rem' }}
-          whileInView={{ 
-            opacity: [0.7, 0.95, 0.7], 
-            width: ['28rem', '31rem', '28rem'] 
-          }}
-          viewport={{ once: false, amount: 0.1 }}
-          transition={{
-            delay: 0.2,
-            duration: 5,
-            repeat: Infinity,
-            ease: 'easeInOut'
-          }}
-          className="lamp-cone lamp-cone-left"
-        >
-          <div className="lamp-fade-bottom" />
-          <div className="lamp-fade-right" />
-        </motion.div>
-
-        {/* Blur base */}
-        <div className="lamp-blur-base" />
-
-        {/* Glow orb */}
-        <motion.div 
-          animate={{
-            opacity: [0.35, 0.55, 0.35],
-            scale: [0.98, 1.03, 0.98]
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="lamp-orb" 
-        />
-
-        {/* Bright beam */}
-        <motion.div
-          initial={{ width: '6rem' }}
-          whileInView={{ 
-            width: ['14rem', '16rem', '14rem'],
-            opacity: [0.8, 0.95, 0.8]
-          }}
-          viewport={{ once: false }}
-          transition={{ 
-            delay: 0.2, 
-            duration: 4, 
-            repeat: Infinity,
-            repeatDelay: 0.2,
-            ease: 'easeInOut' 
-          }}
-          className="lamp-beam-inner"
-        />
-
-        {/* Horizontal line */}
-        <motion.div
-          initial={{ width: '12rem' }}
-          whileInView={{ width: '30rem' }}
-          viewport={{ once: false, amount: 0.1 }}
-          transition={{ delay: 0.2, duration: 0.8, ease: 'easeInOut' }}
-          className="lamp-line"
-        />
-
-        {/* Dark mask above */}
-        <div className="lamp-mask-top" />
-      </div>
-
-      {/* Content sits on top */}
-      <div className="lamp-content">
-        {children}
-      </div>
+const ContactHero = ({ children }) => (
+  <section className="contact-hero">
+    <div className="contact-hero-waves" aria-hidden="true">
+      <LineWaves
+        speed={0.3}
+        innerLineCount={32}
+        outerLineCount={36}
+        warpIntensity={1}
+        rotation={-45}
+        edgeFadeWidth={0}
+        colorCycleSpeed={1}
+        brightness={0.2}
+        color1="#1ea1b6"
+        color2="#ffffff"
+        color3="#1ea1b6"
+        enableMouseInteraction
+        mouseInfluence={2}
+      />
     </div>
-  );
-};
+    <div className="contact-hero-overlay" aria-hidden="true" />
+    <div className="contact-hero-content">
+      {children}
+    </div>
+  </section>
+);
 
 /* ─── Main Contact Component ─── */
 const Contact = () => {
@@ -127,8 +52,8 @@ const Contact = () => {
   return (
     <div className="contact-page">
 
-      {/* ── Lamp Hero Section ── */}
-      <LampContainer>
+      {/* ── Hero Section ── */}
+      <ContactHero>
         <span className="contact-badge">24/7 Support Desk</span>
         <motion.h1
           initial={{ opacity: 0.5, y: 60 }}
@@ -168,7 +93,7 @@ const Contact = () => {
             <span className="hero-stat-label">Happy Clients</span>
           </div>
         </motion.div>
-      </LampContainer>
+      </ContactHero>
 
       {/* ── Info Cards + Form ── */}
       <section className="contact-body">
