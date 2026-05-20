@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { User, Package, Shield, LogOut, ArrowRight, CheckCircle2, Save } from 'lucide-react';
+import { ROUTES } from '../../config/routes';
 import './Account.css';
 
-const Account = ({ setCurrentPage }) => {
+const Account = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('orders');
   const [profileSaved, setProfileSaved] = useState(false);
 
@@ -57,7 +60,7 @@ const Account = ({ setCurrentPage }) => {
               <li className={`account-nav-item ${activeTab === 'security' ? 'active' : ''}`} onClick={() => setActiveTab('security')}>
                 <Shield size={20} /> Account Security
               </li>
-              <li className="account-nav-item" style={{ color: 'var(--danger)' }} onClick={() => setCurrentPage('home')}>
+              <li className="account-nav-item" style={{ color: 'var(--danger)' }} onClick={() => navigate(ROUTES.home)}>
                 <LogOut size={20} /> Log Out
               </li>
             </ul>

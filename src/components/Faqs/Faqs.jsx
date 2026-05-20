@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Reveal from '../Reveal/Reveal';
 import './Faqs.css';
 
 const CATEGORIES = [
@@ -77,8 +78,7 @@ const Faqs = () => {
     <section className="faqs-section">
       <div className="faqs-container">
         
-        {/* Section Header */}
-        <div className="faqs-header">
+        <Reveal variant="up" delay={80} className="faqs-header">
           <span className="faqs-subtitle">CUSTOMER INQUIRIES</span>
           <h2 className="faqs-title">
             FREQUENTLY ASKED{' '}
@@ -92,10 +92,9 @@ const Faqs = () => {
               </span>
             </span>
           </h2>
-        </div>
+        </Reveal>
 
-        {/* Categories Grid Layout */}
-        <div className="faqs-grid">
+        <Reveal variant="scale" delay={220} className="faqs-grid">
           
           {/* Sidebar Navigation */}
           <div className="faqs-sidebar">
@@ -158,7 +157,7 @@ const Faqs = () => {
             })}
           </div>
 
-        </div>
+        </Reveal>
 
       </div>
     </section>

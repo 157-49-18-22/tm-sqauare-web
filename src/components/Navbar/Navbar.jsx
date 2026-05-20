@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { isProductsRoute, ROUTES } from '../../config/routes';
 
-const Navbar = ({ currentPage, setCurrentPage, cartItemsCount }) => {
+const Navbar = ({ cartItemsCount }) => {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
@@ -20,16 +24,18 @@ const Navbar = ({ currentPage, setCurrentPage, cartItemsCount }) => {
   const handleMouseLeave = () => {
     const timer = setTimeout(() => {
       setProductsOpen(false);
-    }, 450); // 450ms delay
+    }, 450);
     setDropdownTimer(timer);
   };
 
-  const go = (page) => { 
+  const go = (path) => {
     if (dropdownTimer) clearTimeout(dropdownTimer);
-    setCurrentPage(page); 
-    setMobileOpen(false); 
-    setProductsOpen(false); 
+    navigate(path);
+    setMobileOpen(false);
+    setProductsOpen(false);
   };
+
+  const isActive = (path) => pathname === path;
 
   return (
     <header
@@ -51,12 +57,10 @@ const Navbar = ({ currentPage, setCurrentPage, cartItemsCount }) => {
     >
       <div style={{ margin:'0 auto', padding:'0 24px', display:'flex', alignItems:'center', justifyContent:'space-between', height:64 }}>
 
-        {/* Circular Logo & Name */}
         <div
-          onClick={() => go('home')}
+          onClick={() => go(ROUTES.home)}
           style={{ display:'flex', alignItems:'center', gap:10, cursor:'pointer' }}
         >
-          {/* White Circular Badge */}
           <div style={{
             background:'#fff',
             width:40,
@@ -79,22 +83,20 @@ const Navbar = ({ currentPage, setCurrentPage, cartItemsCount }) => {
             }}>TM</span>
           </div>
 
-          {/* Text labels */}
           <div style={{ display:'flex', flexDirection:'column' }}>
             <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.2rem', letterSpacing:'0.12em', color:'#f5f5f5', lineHeight:1 }}>TM SQUARE</span>
             <span style={{ fontSize:'0.52rem', letterSpacing:'0.22em', color:'var(--accent)', fontWeight:700, lineHeight:1, marginTop:2 }}>GLOBAL SOLUTIONS</span>
           </div>
         </div>
 
-        {/* Desktop Nav - Middle */}
         <nav style={{ display:'flex', alignItems:'center', gap:32 }}>
           {[
-            { label:'HOME', page:'home' },
-            { label:'ABOUT', page:'about' },
+            { label:'HOME', path: ROUTES.home },
+            { label:'ABOUT', path: ROUTES.about },
           ].map(item => (
             <button
-              key={item.page}
-              onClick={() => go(item.page)}
+              key={item.path}
+              onClick={() => go(item.path)}
               style={{
                 background:'none',
                 border:'none',
@@ -104,25 +106,24 @@ const Navbar = ({ currentPage, setCurrentPage, cartItemsCount }) => {
                 fontSize:'0.72rem',
                 letterSpacing:'0.15em',
                 textTransform:'uppercase',
-                color: currentPage === item.page ? 'var(--accent)' : '#888',
+                color: isActive(item.path) ? 'var(--accent)' : '#888',
                 transition:'color 0.2s',
                 padding:0,
               }}
-              onMouseEnter={e => { if(currentPage !== item.page) e.target.style.color='#f5f5f5'; }}
-              onMouseLeave={e => { if(currentPage !== item.page) e.target.style.color='#888'; }}
+              onMouseEnter={e => { if(!isActive(item.path)) e.target.style.color='#f5f5f5'; }}
+              onMouseLeave={e => { if(!isActive(item.path)) e.target.style.color='#888'; }}
             >
               {item.label}
             </button>
           ))}
 
-          {/* Products Dropdown */}
           <div
             style={{ position:'relative' }}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
             <button
-              onClick={() => go('products')}
+              onClick={() => go(ROUTES.products)}
               style={{
                 background:'none',
                 border:'none',
@@ -132,7 +133,7 @@ const Navbar = ({ currentPage, setCurrentPage, cartItemsCount }) => {
                 fontSize:'0.72rem',
                 letterSpacing:'0.15em',
                 textTransform:'uppercase',
-                color: ['products','tpms','paper','fastag'].includes(currentPage) ? 'var(--accent)' : '#888',
+                color: isProductsRoute(pathname) ? 'var(--accent)' : '#888',
                 transition:'color 0.2s',
                 display:'flex',
                 alignItems:'center',
@@ -157,13 +158,12 @@ const Navbar = ({ currentPage, setCurrentPage, cartItemsCount }) => {
                 boxShadow:'0 20px 60px rgba(0,0,0,0.8)',
               }}>
                 {[
-                  { icon:'memory', label:'TPMS Sensors', sub:'Automotive safety tech', page:'tpms' },
-                  { icon:'description', label:'Copier Paper', sub:'Premium office supplies', page:'paper' },
-                  { icon:'near_me', label:'FASTag Services', sub:'RFID cashless tolls', page:'fastag' },
+                  { icon:'description', label:'Copier Paper', sub:'Premium office supplies', path: ROUTES.paper },
+                  { icon:'near_me', label:'FASTag Services', sub:'RFID cashless tolls', path: ROUTES.fastag },
                 ].map(item => (
                   <div
-                    key={item.page}
-                    onClick={() => go(item.page)}
+                    key={item.path}
+                    onClick={() => go(item.path)}
                     style={{
                       display:'flex',
                       alignItems:'center',
@@ -172,9 +172,10 @@ const Navbar = ({ currentPage, setCurrentPage, cartItemsCount }) => {
                       borderRadius:8,
                       cursor:'pointer',
                       transition:'background 0.2s',
+                      background: pathname === item.path ? 'rgba(30,161,182,0.12)' : 'transparent',
                     }}
                     onMouseEnter={e => e.currentTarget.style.background='rgba(30,161,182,0.08)'}
-                    onMouseLeave={e => e.currentTarget.style.background='transparent'}
+                    onMouseLeave={e => e.currentTarget.style.background= pathname === item.path ? 'rgba(30,161,182,0.12)' : 'transparent'}
                   >
                     <div style={{
                       width:32,
@@ -199,11 +200,11 @@ const Navbar = ({ currentPage, setCurrentPage, cartItemsCount }) => {
           </div>
 
           {[
-            { label:'CONTACT', page:'contact' },
+            { label:'CONTACT', path: ROUTES.contact },
           ].map(item => (
             <button
-              key={item.page}
-              onClick={() => go(item.page)}
+              key={item.path}
+              onClick={() => go(item.path)}
               style={{
                 background:'none',
                 border:'none',
@@ -213,29 +214,27 @@ const Navbar = ({ currentPage, setCurrentPage, cartItemsCount }) => {
                 fontSize:'0.72rem',
                 letterSpacing:'0.15em',
                 textTransform:'uppercase',
-                color: currentPage === item.page ? 'var(--accent)' : '#888',
+                color: isActive(item.path) ? 'var(--accent)' : '#888',
                 transition:'color 0.2s',
                 padding:0,
               }}
-              onMouseEnter={e => { if(currentPage !== item.page) e.target.style.color='#f5f5f5'; }}
-              onMouseLeave={e => { if(currentPage !== item.page) e.target.style.color='#888'; }}
+              onMouseEnter={e => { if(!isActive(item.path)) e.target.style.color='#f5f5f5'; }}
+              onMouseLeave={e => { if(!isActive(item.path)) e.target.style.color='#888'; }}
             >
               {item.label}
             </button>
           ))}
         </nav>
 
-        {/* Right actions */}
         <div style={{ display:'flex', alignItems:'center', gap:10 }}>
-          {/* Shopping Cart */}
           <button
-            onClick={() => go('cart')}
+            onClick={() => go(ROUTES.cart)}
             style={{
               position:'relative',
               background:'none',
               border:'none',
               cursor:'pointer',
-              color: currentPage==='cart' ? 'var(--accent)' : '#888',
+              color: isActive(ROUTES.cart) ? 'var(--accent)' : '#888',
               padding:8,
               transition:'color 0.2s',
             }}
@@ -260,14 +259,13 @@ const Navbar = ({ currentPage, setCurrentPage, cartItemsCount }) => {
             )}
           </button>
 
-          {/* Account */}
           <button
-            onClick={() => go('my-account')}
+            onClick={() => go(ROUTES.account)}
             style={{
               background:'none',
               border:'none',
               cursor:'pointer',
-              color: currentPage==='my-account' ? 'var(--accent)' : '#888',
+              color: isActive(ROUTES.account) ? 'var(--accent)' : '#888',
               padding:8,
               transition:'color 0.2s'
             }}
@@ -275,9 +273,8 @@ const Navbar = ({ currentPage, setCurrentPage, cartItemsCount }) => {
             <span className="material-symbols-outlined" style={{ fontSize:20 }}>account_circle</span>
           </button>
 
-          {/* Pill Capsule Button */}
           <button
-            onClick={() => go('contact')}
+            onClick={() => go(ROUTES.contact)}
             style={{
               background:'#fff',
               color:'#050505',

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Reveal from '../Reveal/Reveal';
 import './Timeline.css';
 
 const STEPS = [
@@ -33,15 +34,7 @@ const Timeline = () => {
   const headerRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [fillProgress, setFillProgress] = useState(0);
-  const [inView, setInView] = useState(false);
-
   useEffect(() => {
-    // Check if component is in view
-    const observer = new IntersectionObserver(([e]) => {
-      setInView(e.isIntersecting);
-    }, { threshold: 0.05 });
-    if (containerRef.current) observer.observe(containerRef.current);
-    
     // Smooth scroll filling line
     const handleScroll = () => {
       if (!containerRef.current) return;
@@ -77,7 +70,6 @@ const Timeline = () => {
     handleHeaderScroll();
 
     return () => {
-      observer.disconnect();
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('scroll', handleHeaderScroll);
     };
@@ -88,13 +80,7 @@ const Timeline = () => {
       <div className="timeline-container">
         
         {/* Section Header */}
-        <div 
-          className="timeline-header" 
-          style={{ 
-            opacity: inView ? 1 : 0, 
-            transform: inView ? 'translateY(0)' : 'translateY(24px)' 
-          }}
-        >
+        <Reveal variant="up" delay={80} className="timeline-header">
           <span className="timeline-subtitle">OPERATIONAL WORKFLOW</span>
           <h2 className="timeline-title">
             HOW WE DELIVER{' '}
@@ -111,10 +97,9 @@ const Timeline = () => {
           <p className="timeline-desc">
             A structured, quality-controlled, and seamless implementation strategy designed for long-term reliability.
           </p>
-        </div>
+        </Reveal>
 
-        {/* Timeline Wrapper */}
-        <div className="timeline-wrapper">
+        <Reveal variant="scale" delay={240} className="timeline-wrapper">
           
           {/* Main Background Line Track */}
           <div className="timeline-track-bg" />
@@ -127,21 +112,16 @@ const Timeline = () => {
             }} 
           />
 
-          {/* Timeline Nodes */}
-          <div className="timeline-list">
+          <div className="timeline-list" data-reveal-stagger>
             {STEPS.map((s, idx) => {
               const nodeOffset = (idx + 0.5) / STEPS.length;
               const isPassed = scrollProgress >= nodeOffset;
               
               return (
-                <div 
-                  key={s.num} 
+                <Reveal
+                  key={s.num}
+                  variant="up"
                   className="timeline-item"
-                  style={{ 
-                    opacity: inView ? 1 : 0,
-                    transform: inView ? 'translateY(0)' : 'translateY(24px)',
-                    transitionDelay: `${idx * 0.15}s`
-                  }}
                 >
                   
                   {/* Glowing Node Button / Icon */}
@@ -169,12 +149,12 @@ const Timeline = () => {
                     </p>
                   </div>
 
-                </div>
+                </Reveal>
               );
             })}
           </div>
 
-        </div>
+        </Reveal>
 
       </div>
     </section>

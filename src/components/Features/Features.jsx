@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Reveal from '../Reveal/Reveal';
 
 // Reusable scroll-fill text component
 const ScrollFillText = ({ children, fontSize, delay = 0 }) => {
@@ -47,24 +48,11 @@ const FEATURES = [
   { num:'04', icon:'verified', title:'2,00,000+ Trusted Clients', desc:'Over two lakh satisfied drivers, businesses, and printing agencies rely on us month after month.' },
 ];
 
-const Features = () => {
-  const ref = useRef(null);
-  const [inView, setInView] = useState(false);
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { setInView(e.isIntersecting); }, { threshold: 0.1 });
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
-
-  return (
-    <section ref={ref} style={{ background: '#0d0d0d', padding: '80px 0', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
+const Features = () => (
+    <section style={{ background: '#0d0d0d', padding: '80px 0', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px' }}>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 56, flexWrap: 'wrap', gap: 32,
-          opacity: inView ? 1 : 0, transform: inView ? 'translateY(0)' : 'translateY(28px)',
-          transition: 'opacity 0.7s ease, transform 0.7s cubic-bezier(0.16,1,0.3,1)',
-        }}>
+        <Reveal variant="up" delay={60} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 56, flexWrap: 'wrap', gap: 32 }}>
           <div>
             <span style={{ display: 'block', fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 16 }}>WHY PARTNER WITH US</span>
             <div style={{ fontFamily: "'Bebas Neue',sans-serif", letterSpacing: '0.03em', lineHeight: 0.88 }}>
@@ -75,17 +63,15 @@ const Features = () => {
           <p style={{ color: '#555', fontSize: '0.88rem', lineHeight: 1.7, maxWidth: 360 }}>
             Discover why thousands of Indian enterprises and car owners choose TM Square Global Solutions as their official partner.
           </p>
-        </div>
+        </Reveal>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 1, background: 'rgba(255,255,255,0.04)', borderRadius: 12, overflow: 'hidden' }}>
-          {FEATURES.map((f, i) => (
-            <div
+        <div data-reveal-stagger style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 1, background: 'rgba(255,255,255,0.04)', borderRadius: 12, overflow: 'hidden' }}>
+          {FEATURES.map((f) => (
+            <Reveal
               key={f.num}
+              variant="up"
               style={{
                 background: '#0d0d0d', padding: '36px 28px',
-                opacity: inView ? 1 : 0,
-                transform: inView ? 'translateY(0)' : 'translateY(28px)',
-                transition: `opacity 0.6s ease ${0.1 + i * 0.1}s, transform 0.6s ease ${0.1 + i * 0.1}s`,
                 position: 'relative', overflow: 'hidden',
               }}
               onMouseEnter={e => e.currentTarget.style.background = '#111'}
@@ -98,12 +84,11 @@ const Features = () => {
               <div style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 10 }}>{f.num}</div>
               <h4 style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: '1.4rem', letterSpacing: '0.05em', color: '#f5f5f5', marginBottom: 10, lineHeight: 1.1 }}>{f.title}</h4>
               <p style={{ color: '#666', fontSize: '0.82rem', lineHeight: 1.7 }}>{f.desc}</p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
     </section>
-  );
-};
+);
 
 export default Features;

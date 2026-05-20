@@ -1,17 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { pageKeyToPath } from '../../config/routes';
+import Reveal from '../Reveal/Reveal';
 import copierPaperHero from '../../assets/copier_paper_hero.png';
-import tpmsSensorsHero from '../../assets/tpms_sensors_hero.png';
+
 import fastagPlazaHero from '../../assets/fastag_plaza_hero.png';
 
 const PRODUCTS = [
   {
-    num: '01', badge: 'AUTOMOTIVE SAFETY',
-    title: 'TPMS — TYRE PRESSURE SENSORS',
-    desc: 'Solar-powered real-time tire pressure and temperature tracking. Four ultra-precision external sensors with active anti-theft design. Keep your fleet safe on every road.',
-    specs: ['Solar Charged', '4 External Sensors', 'IP67 Waterproof', 'Real-time Alarm'],
-    price: '₹2,500', unit: '/ unit kit',
-    page: 'tpms',
-    img: tpmsSensorsHero,
+    num: '01', badge: 'HYGIENE & PAPER',
+    title: 'MELANIE TISSUE PAPER',
+    desc: 'Premium soft facial and toilet tissue crafted for everyday comfort—strong when wet, gentle on skin. Ideal for homes, offices, hospitality, and retail shelves with consistent quality batch after batch.',
+    specs: ['Soft 2-Ply & 3-Ply', 'High Absorbency', 'Bulk & Retail Packs', 'Skin-Friendly'],
+    price: 'Get Quote', unit: '/ bulk order',
+    page: 'contact',
+    img: '/pic.png',
   },
   {
     num: '02', badge: 'OFFICE SUPPLIES',
@@ -33,7 +36,8 @@ const PRODUCTS = [
   },
 ];
 
-const ProductCard = ({ p, i, setCurrentPage }) => {
+const ProductCard = ({ p, i }) => {
+  const navigate = useNavigate();
   const cardRef = useRef(null);
   const [revealed, setRevealed] = useState(false);
   const isEven = i % 2 === 0;
@@ -67,7 +71,6 @@ const ProductCard = ({ p, i, setCurrentPage }) => {
           order: isEven ? 1 : 2,
           position: 'relative',
           overflow: 'hidden',
-          /* Clip from the edge inward — like a curtain roll */
           clipPath: revealed
             ? 'inset(0% 0% 0% 0% round 0px)'
             : isEven
@@ -86,9 +89,7 @@ const ProductCard = ({ p, i, setCurrentPage }) => {
             display: 'block',
           }}
         />
-        {/* Overlay gradient */}
         <div style={{ position: 'absolute', inset: 0, background: isEven ? 'linear-gradient(to right, rgba(0,0,0,0.4) 0%, transparent 60%)' : 'linear-gradient(to left, rgba(0,0,0,0.4) 0%, transparent 60%)' }} />
-        {/* Corner number */}
         <div style={{ position: 'absolute', bottom: 20, right: isEven ? 'auto' : 20, left: isEven ? 20 : 'auto', fontFamily: "'Bebas Neue',sans-serif", fontSize: '5rem', color: 'rgba(255,255,255,0.12)', lineHeight: 1, userSelect: 'none' }}>{p.num}</div>
       </div>
 
@@ -137,7 +138,7 @@ const ProductCard = ({ p, i, setCurrentPage }) => {
             <div style={{ fontSize: '0.58rem', color: '#444', letterSpacing: '0.12em', textTransform: 'uppercase', marginTop: 3 }}>{p.unit}</div>
           </div>
           <button
-            onClick={() => setCurrentPage(p.page)}
+            onClick={() => navigate(pageKeyToPath(p.page))}
             style={{
               background: 'var(--accent)', color: '#fff', border: 'none', borderRadius: 6,
               padding: '10px 22px', fontWeight: 700, fontSize: '0.7rem', letterSpacing: '0.1em',
@@ -155,19 +156,9 @@ const ProductCard = ({ p, i, setCurrentPage }) => {
   );
 };
 
-const Products = ({ setCurrentPage }) => {
+const Products = () => {
   const headerRef = useRef(null);
-  const [fillProgress, setFillProgress] = useState(0); // 0=all orange outline, 1=all white
-  const [headerVisible, setHeaderVisible] = useState(false);
-
-  useEffect(() => {
-    // Fade-in on enter
-    const obs = new IntersectionObserver(([e]) => {
-      setHeaderVisible(e.isIntersecting);
-    }, { threshold: 0.1 });
-    if (headerRef.current) obs.observe(headerRef.current);
-    return () => obs.disconnect();
-  }, []);
+  const [fillProgress, setFillProgress] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -192,16 +183,8 @@ const Products = ({ setCurrentPage }) => {
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px' }}>
 
         {/* Section heading with scroll-fill effect */}
-        <div
-          ref={headerRef}
-          style={{
-            textAlign: 'center', marginBottom: 48,
-            opacity: headerVisible ? 1 : 0,
-            transform: headerVisible ? 'translateY(0)' : 'translateY(32px)',
-            transition: 'opacity 0.8s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1)',
-          }}
-        >
-          <div style={{ fontFamily: "'Bebas Neue',sans-serif", letterSpacing: '0.04em', lineHeight: 0.88 }}>
+        <Reveal variant="up" delay={60} style={{ textAlign: 'center', marginBottom: 48 }}>
+          <div ref={headerRef} style={{ fontFamily: "'Bebas Neue',sans-serif", letterSpacing: '0.04em', lineHeight: 0.88 }}>
             {/* SELECTED — always solid white */}
             <div style={{ fontSize: 'clamp(64px,9vw,130px)', color: '#f5f5f5' }}>SELECTED</div>
 
@@ -231,12 +214,12 @@ const Products = ({ setCurrentPage }) => {
           <p style={{ color: '#444', fontSize: '0.8rem', letterSpacing: '0.2em', textTransform: 'uppercase', marginTop: 20 }}>
             Automotive · Office Supplies · RFID
           </p>
-        </div>
+        </Reveal>
 
         {/* Product cards with scroll-reveal wipe animation */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
           {PRODUCTS.map((p, i) => (
-            <ProductCard key={p.num} p={p} i={i} setCurrentPage={setCurrentPage} />
+            <ProductCard key={p.num} p={p} i={i} />
           ))}
         </div>
       </div>

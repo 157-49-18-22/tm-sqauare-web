@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Reveal from '../Reveal/Reveal';
 
 const ScrollFillText = ({ children, fontSize }) => {
   const ref = useRef(null);
@@ -22,7 +23,7 @@ const ScrollFillText = ({ children, fontSize }) => {
   );
 };
 
-const Quote = ({ setCurrentPage }) => {
+const Quote = () => {
   const [form, setForm] = useState({ name:'', email:'', service:'Automotive Safety (TPMS)', message:'' });
   const [sent, setSent] = useState(false);
 
@@ -43,8 +44,7 @@ const Quote = ({ setCurrentPage }) => {
 
       <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 32px', display:'grid', gridTemplateColumns:'1fr 1fr', gap:80, alignItems:'center', position:'relative', zIndex:1 }}>
 
-        {/* Left */}
-        <div>
+        <Reveal variant="left" delay={80}>
           <span style={{ display:'block', fontSize:'0.65rem', fontWeight:700, letterSpacing:'0.25em', textTransform:'uppercase', color:'var(--accent)', marginBottom:20 }}>GET IN TOUCH</span>
           <div style={{ fontFamily: "'Bebas Neue',sans-serif", lineHeight: 0.9, letterSpacing: '0.03em', marginBottom: 32 }}>
             <div style={{ fontSize: 'clamp(40px,6vw,80px)', color: '#f5f5f5' }}>SCALE YOUR</div>
@@ -71,10 +71,9 @@ const Quote = ({ setCurrentPage }) => {
               <a href="tel:+917678400367" style={{ color:'#f5f5f5', fontWeight:700, fontSize:'1.1rem', letterSpacing:'0.05em' }}>+91-7678400367</a>
             </div>
           </div>
-        </div>
+        </Reveal>
 
-        {/* Right — Form */}
-        <div style={{ background:'#111', border:'1px solid rgba(255,255,255,0.07)', borderRadius:20, padding:'48px 40px' }}>
+        <Reveal variant="scale" delay={280} style={{ background:'#111', border:'1px solid rgba(255,255,255,0.07)', borderRadius:20, padding:'48px 40px' }}>
           <h3 style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'2rem', letterSpacing:'0.08em', color:'#f5f5f5', marginBottom:32 }}>REQUEST A CUSTOM QUOTE</h3>
 
           {sent && (
@@ -129,7 +128,7 @@ const Quote = ({ setCurrentPage }) => {
               SEND REQUEST <span style={{ fontSize:'1.1rem' }}>→</span>
             </button>
           </form>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

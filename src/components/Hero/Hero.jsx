@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Reveal from '../Reveal/Reveal';
 import copierPaperHero from '../../assets/copier_paper_hero.png';
-import tpmsSensorsHero from '../../assets/tpms_sensors_hero.png';
+
 import fastagPlazaHero from '../../assets/fastag_plaza_hero.png';
 
 const slides = [
@@ -13,15 +14,7 @@ const slides = [
     btn: 'Explore Paper', page: 'paper', num: '01',
     img: copierPaperHero
   },
-  {
-    id: 1, 
-    badge: 'AUTOMOTIVE SAFETY',
-    title: 'TPMS SENSORS',
-    subtitle: 'REAL-TIME TYRE PROTECTION',
-    desc: 'Solar-powered active monitoring system delivering real-time tire pressure and thermal diagnostics directly to your cockpit.',
-    btn: 'Explore TPMS', page: 'tpms', num: '02',
-    img: tpmsSensorsHero
-  },
+
   {
     id: 2, 
     badge: 'SMART MOBILITY',
@@ -40,9 +33,9 @@ const stats = [
   { num: '99.9%', label: 'Accuracy Rate' },
 ];
 
-const MARQUEE_ITEMS = ['TPMS SENSORS','COPIER PAPER','FASTAG RFID','PAN INDIA','24/7 SUPPORT','₹149 FASTAG','2L+ CLIENTS'];
+const MARQUEE_ITEMS = ['COPIER PAPER','FASTAG RFID','PAN INDIA','24/7 SUPPORT','₹149 FASTAG','2L+ CLIENTS','RFID CASHLESS'];
 
-const Hero = ({ setCurrentPage }) => {
+const Hero = () => {
   const [active, setActive] = useState(0);
   const [prevActive, setPrevActive] = useState(0);
   const [progress, setProgress] = useState(0);
@@ -210,12 +203,12 @@ const Hero = ({ setCurrentPage }) => {
 
       {/* ── STATS BAND ── */}
       <section style={{ background: '#111', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '64px 32px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 32 }}>
+        <div data-reveal-stagger style={{ maxWidth: 1280, margin: '0 auto', padding: '64px 32px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 32 }}>
           {stats.map((s, i) => (
-            <div key={i} style={{ textAlign: 'center', borderRight: i < 3 ? '1px solid rgba(255,255,255,0.06)' : 'none', paddingRight: i < 3 ? 32 : 0 }}>
+            <Reveal key={i} variant="up" style={{ textAlign: 'center', borderRight: i < 3 ? '1px solid rgba(255,255,255,0.06)' : 'none', paddingRight: i < 3 ? 32 : 0 }}>
               <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(48px, 5vw, 72px)', color: 'var(--accent)', lineHeight: 1, marginBottom: 8 }}>{s.num}</div>
               <div style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#666' }}>{s.label}</div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>

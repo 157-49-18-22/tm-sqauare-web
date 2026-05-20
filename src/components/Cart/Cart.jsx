@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ShoppingCart, Trash2, ArrowRight, ShieldCheck, Cpu, Send, Check } from 'lucide-react';
+import { ROUTES } from '../../config/routes';
+import Reveal from '../Reveal/Reveal';
 import './Cart.css';
 
-const Cart = ({ setCurrentPage }) => {
+const Cart = () => {
+  const navigate = useNavigate();
   const [items, setItems] = useState([
     {
       id: 1,
@@ -54,7 +58,7 @@ const Cart = ({ setCurrentPage }) => {
             <p style={{ color: 'var(--text-muted)', marginBottom: '32px' }}>
               We have securely forwarded your cart parameters. An executive is reviewing your address details for immediate processing.
             </p>
-            <button className="btn btn-primary" onClick={() => setCurrentPage('home')}>
+            <button className="btn btn-primary" onClick={() => navigate(ROUTES.home)}>
               Return to Home
             </button>
           </div>
@@ -66,23 +70,23 @@ const Cart = ({ setCurrentPage }) => {
   return (
     <div className="cart-page fade-in-up">
       <div className="container">
-        <div className="cart-header">
+        <Reveal variant="up" delay={80} className="cart-header">
           <span className="badge badge-cyan">Order Summary</span>
           <h1 className="cart-title">Your Secure Shopping Cart</h1>
           <p style={{ color: 'var(--text-muted)' }}>Review your selected items and proceed to instant secure checkout.</p>
-        </div>
+        </Reveal>
 
         {items.length === 0 ? (
-          <div className="empty-cart-container fade-in-up">
+          <Reveal variant="scale" delay={200} className="empty-cart-container">
             <ShoppingCart size={64} style={{ color: 'var(--text-muted)', margin: '0 auto 20px auto' }} />
             <h2 style={{ fontSize: '1.8rem', marginBottom: '12px' }}>Your Cart is Currently Empty</h2>
             <p style={{ color: 'var(--text-muted)', marginBottom: '32px' }}>Looks like you haven't added any automotive sensors or copier supplies yet.</p>
-            <button className="btn btn-primary" onClick={() => setCurrentPage('products')}>
+            <button className="btn btn-primary" onClick={() => navigate(ROUTES.products)}>
               Explore Catalog <ArrowRight size={18} />
             </button>
-          </div>
+          </Reveal>
         ) : (
-          <div className="cart-grid">
+          <Reveal variant="scale" delay={200} className="cart-grid">
             {/* Left Column: Cart Items */}
             <div className="cart-items-container">
               {items.map(item => (
@@ -144,7 +148,7 @@ const Cart = ({ setCurrentPage }) => {
                 </div>
               </div>
             </div>
-          </div>
+          </Reveal>
         )}
       </div>
     </div>

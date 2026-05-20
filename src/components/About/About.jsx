@@ -4,7 +4,6 @@ import './About.css';
 import vehicleData from '../../../public/vehicle.json';
 
 const About = () => {
-  const observerRef = useRef(null);
   const [storySlide, setStorySlide] = useState(0);
   const tlSectionRef = useRef(null);
   const tlTrackRef = useRef(null);
@@ -12,13 +11,7 @@ const About = () => {
   const [lottieLoaded, setLottieLoaded] = useState(false);
   const lottieAnimRef = useRef(null);
 
-  useEffect(() => {
-    const opts = { root: null, rootMargin: '0px', threshold: 0.1 };
-    const cb = (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('av-active'); });
-    observerRef.current = new IntersectionObserver(cb, opts);
-    document.querySelectorAll('.av-reveal').forEach(el => observerRef.current.observe(el));
-    return () => observerRef.current?.disconnect();
-  }, []);
+  /* av-reveal animations handled globally by SmoothScroll */
 
   // Dynamically load Lottie Player CDN
   useEffect(() => {
@@ -117,7 +110,7 @@ const About = () => {
       <div className="av-blob av-blob-3"></div>
 
       {/* Hero Right — Tech Logistics Graphic */}
-      <div className="av-hero-img-wrap">
+      <div className="av-hero-img-wrap av-reveal">
         <div className="av-hero-img-frame">
           <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600&auto=format&fit=crop" alt="TM Square Corporate Team" className="av-hero-img" />
         </div>

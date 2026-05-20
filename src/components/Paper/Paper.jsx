@@ -18,6 +18,7 @@ import {
   Phone,
   ChevronLeft
 } from 'lucide-react';
+import Reveal from '../Reveal/Reveal';
 import './Paper.css';
 
 const Paper = () => {
@@ -190,7 +191,7 @@ const Paper = () => {
       </section>
 
       {/* ── Technical Quality Metrics ── */}
-      <section className="metrics-section">
+      <Reveal variant="up" delay={80} as="section" className="metrics-section">
         <div className="paper-container">
           <div className="paper-section-title-wrapper">
             <h2 className="paper-section-heading">Technical Quality Metrics</h2>
@@ -229,10 +230,9 @@ const Paper = () => {
             </div>
           </div>
         </div>
-      </section>
+      </Reveal>
 
-      {/* ── Product Catalog Section ── */}
-      <section id="products" className="catalog-section">
+      <Reveal variant="up" delay={100} as="section" id="products" className="catalog-section">
         <div className="paper-container">
           <div className="catalog-header-row">
             <div>
@@ -272,10 +272,9 @@ const Paper = () => {
             ))}
           </div>
         </div>
-      </section>
+      </Reveal>
 
-      {/* ── Manufacturing Section ── */}
-      <section id="manufacturing" className="mfg-section">
+      <Reveal variant="scale" delay={140} as="section" id="manufacturing" className="mfg-section">
         <div className="paper-container mfg-grid">
           <div className="mfg-img-wrapper">
             <div className="mfg-img-glow" />
@@ -315,8 +314,9 @@ const Paper = () => {
             </div>
           </div>
         </div>
-      </section>
-      <section id="contact" className="inquiry-section">
+      </Reveal>
+
+      <Reveal variant="up" delay={120} as="section" id="contact" className="inquiry-section">
         <div className="inquiry-max">
           <div className="inquiry-split-card">
             {/* Decorative Corner Marks */}
@@ -483,7 +483,7 @@ const Paper = () => {
             )}
           </div>
         </div>
-      </section>
+      </Reveal>
     </div>
   );
 };

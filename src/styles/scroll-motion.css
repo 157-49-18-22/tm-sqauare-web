@@ -1,0 +1,83 @@
+/* ── Lenis smooth scroll base ── */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ── Scroll reveal (hidden until in view) ── */
+[data-reveal] {
+  --reveal-delay: 0ms;
+  --reveal-duration: 1.2s;
+  opacity: 0;
+  transition:
+    opacity var(--reveal-duration) cubic-bezier(0.16, 1, 0.3, 1),
+    transform var(--reveal-duration) cubic-bezier(0.16, 1, 0.3, 1),
+    filter var(--reveal-duration) cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay);
+  will-change: opacity, transform, filter;
+}
+
+[data-reveal='up'] {
+  transform: translate3d(0, 52px, 0);
+}
+
+[data-reveal='down'] {
+  transform: translate3d(0, -40px, 0);
+}
+
+[data-reveal='left'] {
+  transform: translate3d(-48px, 0, 0);
+}
+
+[data-reveal='right'] {
+  transform: translate3d(48px, 0, 0);
+}
+
+[data-reveal='scale'] {
+  transform: scale(0.94) translate3d(0, 24px, 0);
+}
+
+[data-reveal='image'] {
+  --reveal-duration: 1.45s;
+  transform: scale(1.08) translate3d(0, 20px, 0);
+  filter: blur(10px) saturate(0.85);
+}
+
+[data-reveal='fade'] {
+  transform: none;
+}
+
+.reveal-visible[data-reveal] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0) saturate(1);
+}
+
+/* Stagger children inside a group */
+[data-reveal-stagger] > [data-reveal]:nth-child(1) { --reveal-delay: 0ms; }
+[data-reveal-stagger] > [data-reveal]:nth-child(2) { --reveal-delay: 120ms; }
+[data-reveal-stagger] > [data-reveal]:nth-child(3) { --reveal-delay: 240ms; }
+[data-reveal-stagger] > [data-reveal]:nth-child(4) { --reveal-delay: 360ms; }
+[data-reveal-stagger] > [data-reveal]:nth-child(5) { --reveal-delay: 480ms; }
+[data-reveal-stagger] > [data-reveal]:nth-child(6) { --reveal-delay: 600ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+}

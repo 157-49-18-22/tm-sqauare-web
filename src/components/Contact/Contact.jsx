@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import Reveal from '../Reveal/Reveal';
 import { Phone, Mail, MapPin, Send, CheckCircle2, MessageSquare, Clock } from 'lucide-react';
 import LineWaves from '../LineWaves/LineWaves';
 import './Contact.css';
@@ -100,8 +101,7 @@ const Contact = () => {
         <div className="container">
           <div className="contact-grid">
 
-            {/* Left: Info Cards */}
-            <div className="contact-info-cards">
+            <Reveal variant="left" delay={100} className="contact-info-cards">
               <div className="contact-info-card">
                 <div className="contact-icon-wrapper phone-icon"><Phone size={26} /></div>
                 <div>
@@ -135,10 +135,9 @@ const Contact = () => {
               <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="whatsapp-btn">
                 <MessageSquare size={20} /> Chat with Us on WhatsApp
               </a>
-            </div>
+            </Reveal>
 
-            {/* Right: Form */}
-            <div className="contact-form-card">
+            <Reveal variant="scale" delay={280} className="contact-form-card">
               <h2 className="form-title">Send an Inquiry</h2>
               <p className="form-subtitle">Fill out the form below and an expert will reply within 2 business hours.</p>
 
@@ -179,22 +178,21 @@ const Contact = () => {
                   </button>
                 </form>
               )}
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
 
-      {/* ── Map Section ── */}
       <section className="contact-map-section">
         <div className="container">
-          <div className="map-header">
+          <Reveal variant="up" delay={80} className="map-header">
             <span className="contact-badge">Find Us</span>
             <h2 className="map-title">Our Location</h2>
             <p className="map-subtitle">
               Omaxe Spa Village, 702 Aspen D Tower, Sector 78, Greater Faridabad, Haryana – 121001
             </p>
-          </div>
-          <div className="map-wrapper">
+          </Reveal>
+          <Reveal variant="image" delay={220} className="map-wrapper">
             <iframe
               title="TM Square Location"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3511.3607505890437!2d77.37!3d28.38!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cdc3c8e06ea69%3A0x9a91f12f1d3a9bcf!2sOmaxe%20Spa%20Village%2C%20Sector%2078%2C%20Faridabad%2C%20Haryana%20121001!5e0!3m2!1sen!2sin!4v1716000000000!5m2!1sen!2sin"
@@ -209,7 +207,7 @@ const Contact = () => {
                 <p className="map-overlay-addr">702 Aspen D Tower, Omaxe Spa Village,<br />Sector 78, Greater Faridabad – 121001</p>
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 

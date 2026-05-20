@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Send, Headphones, ShieldCheck, Truck, Fuel, Zap, RefreshCw, CreditCard, Star } from 'lucide-react';
+import Reveal from '../Reveal/Reveal';
 import './FASTag.css';
 import Hyperspeed, { hyperspeedPresets } from './Hyperspeed';
 
@@ -32,14 +33,14 @@ const FASTag = () => {
   const selectedPrice = pricingData[vehicleType];
 
   return (
-    <div className="fastag-page fade-in-up">
+    <div className="fastag-page">
       {/* WebGL Hyperspeed Background (renders behind the containers) */}
       <Hyperspeed effectOptions={hyperspeedPresets.seaBlue} />
       
       <div className="fastag-container">
         
         {/* Hero Section */}
-        <section className="ft-hero">
+        <Reveal variant="up" delay={60} as="section" className="ft-hero">
           <div className="ft-hero-content">
             <div className="ft-badge">
               <span className="ft-pulse-dot"></span> RFID CASHLESS SYSTEMS
@@ -87,10 +88,9 @@ const FASTag = () => {
               </div>
             </div>
           </div>
-        </section>
+        </Reveal>
 
-        {/* Trust Banner */}
-        <section className="ft-trust-banner">
+        <Reveal variant="up" delay={120} as="section" className="ft-trust-banner">
           <div className="ft-glass-card ft-trust-wrapper">
             <div className="ft-trust-item">
               <div className="ft-trust-icon">
@@ -117,10 +117,9 @@ const FASTag = () => {
               <span className="ft-trust-label">Fast Delivery</span>
             </div>
           </div>
-        </section>
+        </Reveal>
 
-        {/* Why TM Square / Bento Section */}
-        <section className="ft-section">
+        <Reveal variant="up" delay={100} as="section" className="ft-section">
           <h2 className="ft-section-title">
             Why <span className="ft-text-gradient">TM Square?</span>
           </h2>
@@ -166,10 +165,9 @@ const FASTag = () => {
               </p>
             </div>
           </div>
-        </section>
+        </Reveal>
 
-        {/* Cost Calculator Section */}
-        <section className="ft-section">
+        <Reveal variant="scale" delay={160} as="section" className="ft-section">
           <div className="ft-glass-card ft-calc-card">
             <div className="ft-calc-inputs">
               <h2 className="ft-section-title" style={{ textAlign: 'left', marginBottom: '8px' }}>
@@ -217,10 +215,9 @@ const FASTag = () => {
               </div>
             </div>
           </div>
-        </section>
+        </Reveal>
 
-        {/* How it Works timeline */}
-        <section className="ft-section">
+        <Reveal variant="up" delay={120} as="section" className="ft-section">
           <h2 className="ft-section-title">
             Fast-Track <span className="ft-text-gradient">Process</span>
           </h2>
@@ -259,10 +256,9 @@ const FASTag = () => {
               </div>
             </div>
           </div>
-        </section>
+        </Reveal>
 
-        {/* Rider Reviews Section */}
-        <section className="ft-section">
+        <Reveal variant="up" delay={140} as="section" className="ft-section">
           <h2 className="ft-section-title">
             Rider <span className="ft-text-gradient">Feedback</span>
           </h2>
@@ -316,10 +312,9 @@ const FASTag = () => {
               </div>
             </div>
           </div>
-        </section>
+        </Reveal>
 
-        {/* Final CTA Section */}
-        <section className="ft-section">
+        <Reveal variant="scale" delay={180} as="section" className="ft-section">
           <div className="ft-glass-card ft-final-cta-card">
             <div className="ft-final-cta-glow"></div>
             <h2>Ready to <br /><span className="ft-text-gradient">Hit the Road?</span></h2>
@@ -333,7 +328,7 @@ const FASTag = () => {
               Get FASTag Now
             </a>
           </div>
-        </section>
+        </Reveal>
         
       </div>
     </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Reveal from '../Reveal/Reveal';
 import './Calculator.css';
 
 const Calculator = () => {
@@ -43,8 +44,7 @@ const Calculator = () => {
 
       <div className="calculator-container">
         
-        {/* Section Header */}
-        <div className="calculator-header">
+        <Reveal variant="up" delay={80} className="calculator-header">
           <span className="calculator-subtitle">ROI CALCULATOR</span>
           <h2 className="calculator-title">
             ESTIMATE YOUR{' '}
@@ -61,9 +61,8 @@ const Calculator = () => {
           <p className="calculator-desc">
             Adjust the sliders below to calculate how much your organization can save by partnering with TM Square Global Solutions.
           </p>
-        </div>
+        </Reveal>
 
-        {/* Tab Buttons */}
         <div className="calculator-tabs">
           <button 
             onClick={() => setActiveTab('tpms')}
@@ -79,8 +78,7 @@ const Calculator = () => {
           </button>
         </div>
 
-        {/* Calculator Body */}
-        <div className="calculator-body">
+        <Reveal variant="scale" delay={240} className="calculator-body">
           
           {/* Left Column: Inputs */}
           <div>
@@ -196,7 +194,7 @@ const Calculator = () => {
             </div>
           </div>
 
-        </div>
+        </Reveal>
 
       </div>
     </section>

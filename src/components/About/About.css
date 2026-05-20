@@ -65,9 +65,10 @@
 .av-hero-img-wrap {
   position: absolute;
   top: 130px;
-  right: -20px;
-  width: 580px;
-  height: 480px;
+  right: max(32px, calc((100% - 1180px) / 2 + 28px));
+  width: min(520px, 42vw);
+  height: min(440px, 36vw);
+  max-height: 480px;
   z-index: 2;
 }
 
@@ -83,6 +84,7 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   transition: all 0.5s ease;
+  margin-left: 7rem;
 }
 
 .av-hero-img-wrap:hover .av-hero-img-frame {
@@ -95,7 +97,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: 35% center;
   opacity: 1;
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -1151,6 +1153,16 @@
 @media (max-width:1024px) {
   .av-crystal-wrap {
     display: none;
+  }
+
+  .av-hero-img-wrap {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 100%;
+    max-width: 560px;
+    height: 360px;
+    margin: 0 auto 48px;
   }
 
   .av-hero {

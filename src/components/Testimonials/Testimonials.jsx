@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Reveal from '../Reveal/Reveal';
 
 const ScrollFillText = ({ children, fontSize }) => {
   const ref = useRef(null);
@@ -34,25 +35,13 @@ const TESTIMONIALS = [
 
 const Testimonials = () => {
   const [idx, setIdx] = useState(0);
-  const ref = useRef(null);
-  const [inView, setInView] = useState(false);
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { setInView(e.isIntersecting); }, { threshold: 0.1 });
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
-
   const visible = [TESTIMONIALS[idx % TESTIMONIALS.length], TESTIMONIALS[(idx + 1) % TESTIMONIALS.length]];
 
   return (
-    <section ref={ref} style={{ background: 'var(--bg)', padding: '80px 0', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
+    <section style={{ background: 'var(--bg)', padding: '80px 0', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px' }}>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 48, flexWrap: 'wrap', gap: 24,
-          opacity: inView ? 1 : 0, transform: inView ? 'translateY(0)' : 'translateY(24px)',
-          transition: 'opacity 0.7s ease, transform 0.7s cubic-bezier(0.16,1,0.3,1)',
-        }}>
+        <Reveal variant="up" delay={80} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 48, flexWrap: 'wrap', gap: 24 }}>
           <div>
             <span style={{ display: 'block', fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 16 }}>CLIENT FEEDBACK</span>
             <div style={{ fontFamily: "'Bebas Neue',sans-serif", letterSpacing: '0.03em', lineHeight: 0.88 }}>
@@ -70,13 +59,11 @@ const Testimonials = () => {
               </button>
             ))}
           </div>
-        </div>
+        </Reveal>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+        <div data-reveal-stagger style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
           {visible.map((t, i) => (
-            <div key={i} style={{ background: '#111', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 14, padding: '36px 40px', position: 'relative', overflow: 'hidden',
-              opacity: inView ? 1 : 0, transform: inView ? 'translateY(0)' : 'translateY(28px)',
-              transition: `all 0.7s ease ${i * 0.12}s` }}>
+            <Reveal key={i} variant="scale" delay={200 + i * 120} style={{ background: '#111', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 14, padding: '36px 40px', position: 'relative', overflow: 'hidden' }}>
               <div style={{ position: 'absolute', top: 16, right: 24, fontFamily: "'Bebas Neue',sans-serif", fontSize: '7rem', color: 'rgba(30,161,182,0.06)', lineHeight: 1, pointerEvents: 'none', userSelect: 'none' }}>"</div>
               <div style={{ display: 'flex', gap: 4, marginBottom: 20 }}>
                 {Array.from({ length: t.stars }).map((_, j) => (
@@ -93,7 +80,7 @@ const Testimonials = () => {
                   <div style={{ fontSize: '0.7rem', color: '#555', marginTop: 2 }}>{t.role}</div>
                 </div>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
