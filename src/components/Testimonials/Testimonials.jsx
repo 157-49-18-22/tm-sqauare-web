@@ -61,7 +61,7 @@ const Testimonials = () => {
           </div>
         </Reveal>
 
-        <div data-reveal-stagger style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+        <div data-reveal-stagger className="home-testimonials-grid">
           {visible.map((t, i) => (
             <Reveal key={i} variant="scale" delay={200 + i * 120} style={{ background: '#111', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 14, padding: '36px 40px', position: 'relative', overflow: 'hidden' }}>
               <div style={{ position: 'absolute', top: 16, right: 24, fontFamily: "'Bebas Neue',sans-serif", fontSize: '7rem', color: 'rgba(30,161,182,0.06)', lineHeight: 1, pointerEvents: 'none', userSelect: 'none' }}>"</div>

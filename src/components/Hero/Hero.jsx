@@ -1,29 +1,34 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { pageKeyToPath } from '../../config/routes';
 import Reveal from '../Reveal/Reveal';
 import copierPaperHero from '../../assets/copier_paper_hero.png';
-
 import fastagPlazaHero from '../../assets/fastag_plaza_hero.png';
+import './Hero.css';
 
 const slides = [
   {
-    id: 0, 
+    id: 0,
     badge: 'OFFICE LOGISTICS',
     title: 'CENTURY COPIER',
     subtitle: 'PREMIUM PRINT SHEETS',
     desc: 'Engineered for high-speed commercial printers. Zero jamming guaranteed with ultra-crisp contrast and premium GSM density.',
-    btn: 'Explore Paper', page: 'paper', num: '01',
-    img: copierPaperHero
+    btn: 'Explore Paper',
+    page: 'paper',
+    num: '01',
+    img: copierPaperHero,
   },
-
   {
-    id: 2, 
+    id: 2,
     badge: 'SMART MOBILITY',
     title: 'FASTAG RFID',
     subtitle: 'CASHLESS HIGHWAY PASS',
     desc: 'Instant cashless electronic toll collection coupled with exclusive HPCL fuel savings across nationwide transit routes.',
-    btn: 'Get FASTag', page: 'fastag', num: '03',
-    img: fastagPlazaHero
-  }
+    btn: 'Get FASTag',
+    page: 'fastag',
+    num: '02',
+    img: fastagPlazaHero,
+  },
 ];
 
 const stats = [
@@ -33,17 +38,20 @@ const stats = [
   { num: '99.9%', label: 'Accuracy Rate' },
 ];
 
-const MARQUEE_ITEMS = ['COPIER PAPER','FASTAG RFID','PAN INDIA','24/7 SUPPORT','₹149 FASTAG','2L+ CLIENTS','RFID CASHLESS'];
+const MARQUEE_ITEMS = ['COPIER PAPER', 'FASTAG RFID', 'PAN INDIA', '24/7 SUPPORT', '₹149 FASTAG', '2L+ CLIENTS', 'RFID CASHLESS'];
 
 const Hero = () => {
+  const navigate = useNavigate();
   const [active, setActive] = useState(0);
   const [prevActive, setPrevActive] = useState(0);
   const [progress, setProgress] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [revealOrigin, setRevealOrigin] = useState('center'); // 'center', 'left', 'right'
+  const [revealOrigin, setRevealOrigin] = useState('center');
   const isHoveredRef = useRef(false);
   const wheelLockRef = useRef(false);
   const slideDuration = 6500;
+
+  const current = slides[active];
 
   const goTo = (idx, origin = 'center') => {
     if (idx === active || isTransitioning) return;
@@ -54,20 +62,18 @@ const Hero = () => {
     setProgress(0);
     setTimeout(() => {
       setIsTransitioning(false);
-    }, 1500); // 1.5s luxurious transition duration
+    }, 1500);
   };
 
-  // Handle Mouse Wheel / Trackpad Scroll to navigate slides exactly like Arnaud Rocca
   useEffect(() => {
     const handleWheel = (e) => {
       if (wheelLockRef.current || isTransitioning) return;
 
-      // Only capture wheel events if the window scroll position is at the very top (inside Hero)
       if (window.scrollY < 50) {
         if (Math.abs(e.deltaY) > 30) {
-          e.preventDefault(); // Prevent standard vertical page jump during slide transition
+          e.preventDefault();
           wheelLockRef.current = true;
-          
+
           if (e.deltaY > 0) {
             goTo((active + 1) % slides.length, 'bottom');
           } else {
@@ -85,7 +91,6 @@ const Hero = () => {
     return () => window.removeEventListener('wheel', handleWheel);
   }, [active, isTransitioning]);
 
-  // Automated Progress Timer
   useEffect(() => {
     let startTime = Date.now();
     let animFrame;
@@ -112,28 +117,17 @@ const Hero = () => {
 
   return (
     <>
-      {/* ── HERO FULLSCREEN IMMERSIVE SLIDER (Arnaud Rocca Style) ── */}
-      <section 
-        style={{ 
-          height: '100vh', 
-          width: '100vw',
-          position: 'relative', 
-          overflow: 'hidden', 
-          display: 'flex', 
-          flexDirection: 'column', 
-          justifyContent: 'space-between',
-          backgroundColor: '#050505',
-        }}
+      <section
+        className="hero-fullscreen"
         onMouseEnter={() => { isHoveredRef.current = true; }}
         onMouseLeave={() => { isHoveredRef.current = false; }}
       >
-        {/* Fullscreen Background Images with pristine Arnaud Rocca circle/radial expanding mask */}
-        <div style={{ position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none', overflow: 'hidden' }}>
+        {/* Background slides */}
+        <div className="hero-bg-layer">
           {slides.map((s, i) => {
             const isActive = i === active;
             const isPrev = i === prevActive;
 
-            // Determine circle clip path coordinates based on transition direction
             let circleStart = 'circle(0% at 50% 50%)';
             let circleEnd = 'circle(150% at 50% 50%)';
             if (revealOrigin === 'bottom') {
@@ -147,13 +141,11 @@ const Hero = () => {
             return (
               <div
                 key={s.id}
+                className={`hero-slide-layer${isActive ? ' is-active' : ''}${isPrev ? ' is-prev' : ''}`}
                 style={{
-                  position: 'absolute',
-                  inset: 0,
                   zIndex: isActive ? 5 : isPrev ? 2 : 1,
-                  /* Luxurious soft circular expanding wipe transition */
                   clipPath: isActive ? circleEnd : circleStart,
-                  transition: 'clip-path 1.5s cubic-bezier(0.77, 0, 0.175, 1)',
+                  transition: 'clip-path 1.5s cubic-bezier(0.77, 0, 0.175, 1), opacity 1s ease',
                   pointerEvents: 'none',
                 }}
               >
@@ -161,53 +153,137 @@ const Hero = () => {
                   src={s.img}
                   alt={s.title}
                   style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    /* Continuous cinematic scale zoom & contrast shift */
                     transform: isActive ? 'scale(1)' : 'scale(1.12)',
                     transition: 'transform 1.5s cubic-bezier(0.77, 0, 0.175, 1), filter 1.5s ease',
                     filter: isActive ? 'brightness(0.95)' : 'brightness(0.3) blur(10px)',
                   }}
                 />
-                {/* Cinematic Vignette Overlay */}
-                <div 
-                  style={{ 
-                    position: 'absolute', 
-                    inset: 0, 
-                    background: 'radial-gradient(circle at center, rgba(0,0,0,0.2) 0%, rgba(5,5,5,0.85) 95%), linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 50%, rgba(5,5,5,0.95) 100%)' 
-                  }} 
+                <div
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background:
+                      'radial-gradient(circle at center, rgba(0,0,0,0.2) 0%, rgba(5,5,5,0.85) 95%), linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 50%, rgba(5,5,5,0.95) 100%)',
+                  }}
                 />
               </div>
             );
           })}
         </div>
 
-        {/* Top spacer for navbar */}
-        <div style={{ height: 95, zIndex: 10, position: 'relative' }} />
+        <div className="hero-left-gradient" aria-hidden="true" />
 
-        {/* Empty content area to allow the slider to be fully visible and uncluttered */}
-        <div style={{ flex: 1 }} />
+        <div className="hero-navbar-spacer" />
+
+        {/* Left content — changes per slide */}
+        <div className="hero-content-wrap">
+          <div className="hero-content">
+            <div key={active} className="hero-content-inner">
+              <div className="hero-slide-num">{current.num}</div>
+              <span className="hero-slide-badge">{current.badge}</span>
+              <h1 className="hero-slide-title">{current.title}</h1>
+              <h2 className="hero-slide-subtitle">{current.subtitle}</h2>
+              <p className="hero-slide-desc">{current.desc}</p>
+              <div className="hero-slide-actions">
+                <button
+                  type="button"
+                  className="hero-cta-btn"
+                  onClick={() => navigate(pageKeyToPath(current.page))}
+                >
+                  {current.btn}
+                  <span>→</span>
+                </button>
+                <button
+                  type="button"
+                  className="hero-cta-ghost"
+                  onClick={() => navigate(pageKeyToPath('contact'))}
+                >
+                  Get Quote
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Dots + counter */}
+        <div className="hero-bottom-bar">
+          <div className="hero-slide-counter">
+            <span>{String(active + 1).padStart(2, '0')}</span>
+            {' / '}
+            {String(slides.length).padStart(2, '0')}
+          </div>
+
+          <div className="hero-dots" role="tablist" aria-label="Hero slides">
+            {slides.map((s, i) => (
+              <button
+                key={s.id}
+                type="button"
+                role="tab"
+                aria-selected={i === active}
+                aria-label={`Slide ${i + 1}: ${s.title}`}
+                className={`hero-dot ${i === active ? 'hero-dot--active' : ''}`}
+                onClick={() => goTo(i, i > active ? 'bottom' : 'top')}
+              >
+                {i === active && (
+                  <span
+                    className="hero-dot-progress"
+                    style={{ width: `${progress}%` }}
+                  />
+                )}
+              </button>
+            ))}
+          </div>
+
+          <div className="hero-scroll-hint">
+            <span>Scroll</span>
+            <span className="material-symbols-outlined">keyboard_arrow_down</span>
+          </div>
+        </div>
       </section>
 
-      {/* ── MARQUEE TICKER ── */}
-      <div style={{ background: 'var(--accent)', overflow: 'hidden', padding: '14px 0', borderTop: '1px solid rgba(255,255,255,0.1)', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+      {/* Marquee */}
+      <div
+        className="hero-marquee"
+        style={{
+          background: 'var(--accent)',
+          overflow: 'hidden',
+          padding: '14px 0',
+          borderTop: '1px solid rgba(255,255,255,0.1)',
+          borderBottom: '1px solid rgba(255,255,255,0.1)',
+          width: '100%',
+          maxWidth: '100%',
+        }}
+      >
         <div className="marquee-inner" style={{ display: 'flex', gap: 0 }}>
           {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
-            <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 24, fontFamily: "'Bebas Neue', sans-serif", fontSize: '1.1rem', letterSpacing: '0.15em', color: '#fff', whiteSpace: 'nowrap', paddingRight: 48 }}>
-              {item} <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: 8 }}>◆</span>
+            <span
+              key={i}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 24,
+                fontFamily: "'Bebas Neue', sans-serif",
+                fontSize: '1.1rem',
+                letterSpacing: '0.15em',
+                color: '#fff',
+                whiteSpace: 'nowrap',
+                paddingRight: 48,
+              }}
+            >
+              {item}{' '}
+              <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: 8 }}>◆</span>
             </span>
           ))}
         </div>
       </div>
 
-      {/* ── STATS BAND ── */}
-      <section style={{ background: '#111', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-        <div data-reveal-stagger style={{ maxWidth: 1280, margin: '0 auto', padding: '64px 32px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 32 }}>
+      {/* Stats */}
+      <section className="hero-stats-band">
+        <div data-reveal-stagger className="hero-stats-grid">
           {stats.map((s, i) => (
-            <Reveal key={i} variant="up" style={{ textAlign: 'center', borderRight: i < 3 ? '1px solid rgba(255,255,255,0.06)' : 'none', paddingRight: i < 3 ? 32 : 0 }}>
-              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(48px, 5vw, 72px)', color: 'var(--accent)', lineHeight: 1, marginBottom: 8 }}>{s.num}</div>
-              <div style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#666' }}>{s.label}</div>
+            <Reveal key={i} variant="up" className="hero-stat-item">
+              <div className="hero-stat-num">{s.num}</div>
+              <div className="hero-stat-label">{s.label}</div>
             </Reveal>
           ))}
         </div>

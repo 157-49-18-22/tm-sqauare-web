@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { pageKeyToPath, ROUTES } from '../../config/routes';
 import Reveal from '../Reveal/Reveal';
+import './Footer.css';
 
 const ScrollFillText = ({ children, fontSize }) => {
   const ref = useRef(null);
@@ -50,41 +51,41 @@ const Footer = () => {
   const go = (page) => navigate(pageKeyToPath(page));
 
   return (
-  <footer style={{ background:'#080808', borderTop:'1px solid rgba(255,255,255,0.05)', paddingTop:80 }}>
+  <footer className="site-footer">
 
     {/* Big CTA row */}
-    <Reveal variant="up" delay={60} style={{ maxWidth:1280, margin:'0 auto', padding:'0 32px 64px', borderBottom:'1px solid rgba(255,255,255,0.06)' }}>
-      <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:40 }}>
-        <div>
-          <div style={{ fontFamily:"'Bebas Neue',sans-serif", lineHeight:0.88, letterSpacing:'0.03em' }}>
-            <div style={{ fontSize:'clamp(48px,7vw,110px)', color:'#f5f5f5' }}>LET'S WORK</div>
-            <div style={{ fontSize:'clamp(48px,7vw,110px)', color:'transparent', WebkitTextStroke:'2px var(--accent)' }}>TOGETHER</div>
+    <Reveal variant="up" delay={60} className="footer-cta-wrap">
+      <div className="footer-cta">
+        <div className="footer-cta-heading">
+          <div className="footer-cta-title">
+            <div className="footer-cta-line footer-cta-line--solid">LET'S WORK</div>
+            <div className="footer-cta-line footer-cta-line--outline">TOGETHER</div>
           </div>
         </div>
-        <div style={{ display:'flex', flexDirection:'column', gap:16, alignItems:'flex-end' }}>
+        <div className="footer-cta-actions">
           <button
+            type="button"
+            className="footer-cta-btn"
             onClick={() => navigate(ROUTES.contact)}
-            style={{ background:'var(--accent)', color:'#fff', border:'none', borderRadius:8, padding:'18px 40px', fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.3rem', letterSpacing:'0.15em', cursor:'pointer', display:'flex', alignItems:'center', gap:12, transition:'all 0.2s' }}
-            onMouseEnter={e=>{ e.currentTarget.style.background='#157B8C'; e.currentTarget.style.transform='translateY(-2px)'; }}
-            onMouseLeave={e=>{ e.currentTarget.style.background='var(--accent)'; e.currentTarget.style.transform='translateY(0)'; }}
           >
-            GET A QUOTE <span style={{ fontSize:'1.2rem' }}>→</span>
+            GET A QUOTE <span aria-hidden="true">→</span>
           </button>
-          <a href="mailto:support@tmsquare.co.in" style={{ color:'#555', fontSize:'0.85rem', letterSpacing:'0.05em', transition:'color 0.2s' }}
-            onMouseEnter={e=>e.target.style.color='var(--accent)'}
-            onMouseLeave={e=>e.target.style.color='#555'}>
+          <a href="mailto:support@tmsquare.co.in" className="footer-cta-email">
             support@tmsquare.co.in
           </a>
         </div>
       </div>
     </Reveal>
 
-    <div data-reveal-stagger style={{ maxWidth:1280, margin:'0 auto', padding:'64px 32px 48px', display:'grid', gridTemplateColumns:'1.5fr 1fr 1fr 1fr', gap:48 }}>
+    <div data-reveal-stagger className="footer-grid-wrap">
 
-      <Reveal variant="up">
+      <Reveal variant="up" className="footer-brand-col">
         <div
+          className="footer-brand-row"
           onClick={() => navigate(ROUTES.home)}
-          style={{ display:'inline-flex', alignItems:'center', gap:12, cursor:'pointer', marginBottom:24 }}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === 'Enter' && navigate(ROUTES.home)}
         >
           <div style={{ background:'var(--accent)', width:40, height:40, borderRadius:6, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
             <span style={{ color:'#fff', fontWeight:900, fontSize:'1rem', fontFamily:"'Bebas Neue',sans-serif", letterSpacing:'0.05em' }}>TM</span>
@@ -95,12 +96,12 @@ const Footer = () => {
           </div>
         </div>
 
-        <p style={{ color:'#555', fontSize:'0.85rem', lineHeight:1.8, marginBottom:32, maxWidth:280 }}>
+        <p className="footer-brand-desc">
           Your one-stop destination for automotive safety systems, office logistics, and digital highway payment solutions across India.
         </p>
 
         {/* Social icons */}
-        <div style={{ display:'flex', gap:10 }}>
+        <div className="footer-social-row">
           {[
             { icon:'public', label:'Web' },
             { icon:'share', label:'Share' },
@@ -118,9 +119,9 @@ const Footer = () => {
       </Reveal>
 
       {Object.entries(LINKS).map(([heading, items]) => (
-        <Reveal key={heading} variant="up">
-          <div style={{ fontSize:'0.62rem', fontWeight:700, letterSpacing:'0.2em', textTransform:'uppercase', color:'var(--accent)', marginBottom:24 }}>{heading}</div>
-          <ul style={{ listStyle:'none', display:'flex', flexDirection:'column', gap:14 }}>
+        <Reveal key={heading} variant="up" className="footer-link-col">
+          <div className="footer-link-heading">{heading}</div>
+          <ul className="footer-link-list">
             {items.map(item => (
               <li key={item.label}>
                 {item.page ? (
@@ -147,7 +148,7 @@ const Footer = () => {
     </div>
 
     {/* Contact strip */}
-    <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 32px 48px', display:'flex', gap:40, flexWrap:'wrap' }}>
+    <div className="footer-contact-strip">
       {[
         { icon:'call', label:'PHONE', value:'+91-7678400367', href:'tel:+917678400367' },
         { icon:'mail', label:'EMAIL', value:'support@tmsquare.co.in', href:'mailto:support@tmsquare.co.in' },
@@ -174,7 +175,7 @@ const Footer = () => {
     </div>
 
     {/* Bottom bar */}
-    <div style={{ borderTop:'1px solid rgba(255,255,255,0.05)', padding:'20px 32px', maxWidth:1280, margin:'0 auto', display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:12 }}>
+    <div className="footer-bottom-bar">
       <span style={{ fontSize:'0.72rem', color:'#333', letterSpacing:'0.08em' }}>© {new Date().getFullYear()} TM SQUARE GLOBAL SOLUTIONS PRIVATE LIMITED. ALL RIGHTS RESERVED.</span>
       <span style={{ fontSize:'0.72rem', color:'#333', letterSpacing:'0.08em' }}>POWERED BY NEXT-GEN WEB SOLUTIONS</span>
     </div>

@@ -178,7 +178,7 @@ const Paper = () => {
               </div>
             </div>
 
-            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <div className="hero-cta-row" style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
               <button onClick={() => scrollToSection('products')} className="btn-primary-cyan">
                 Explore Catalog
               </button>

@@ -62,7 +62,7 @@ function App() {
     <>
       <Navbar cartItemsCount={cartItemsCount} />
 
-      <main style={{ paddingTop: FULL_BLEED_PATHS.has(location.pathname) ? 0 : 100, minHeight: '100vh' }}>
+      <main className={FULL_BLEED_PATHS.has(location.pathname) ? 'app-main app-main--bleed' : 'app-main'}>
         <Routes key={location.pathname}>
           <Route path={ROUTES.home} element={<HomePage />} />
           <Route path={ROUTES.products} element={<Products />} />

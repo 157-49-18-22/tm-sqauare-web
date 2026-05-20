@@ -49,8 +49,8 @@ const FEATURES = [
 ];
 
 const Features = () => (
-    <section style={{ background: '#0d0d0d', padding: '80px 0', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
-      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px' }}>
+    <section style={{ background: '#0d0d0d', padding: '80px 0', borderTop: '1px solid rgba(255,255,255,0.04)', overflow: 'hidden', width: '100%', maxWidth: '100%' }}>
+      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px', width: '100%', boxSizing: 'border-box' }}>
 
         <Reveal variant="up" delay={60} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 56, flexWrap: 'wrap', gap: 32 }}>
           <div>
@@ -65,7 +65,7 @@ const Features = () => (
           </p>
         </Reveal>
 
-        <div data-reveal-stagger style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 1, background: 'rgba(255,255,255,0.04)', borderRadius: 12, overflow: 'hidden' }}>
+        <div data-reveal-stagger className="home-features-grid">
           {FEATURES.map((f) => (
             <Reveal
               key={f.num}

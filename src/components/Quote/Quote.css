@@ -1,0 +1,150 @@
+/* ══════════════════════════════════════════
+   Home — Request Quote form
+   ══════════════════════════════════════════ */
+
+.home-quote-card {
+  background: #111;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.home-quote-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.home-quote-field {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.home-quote-field label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.home-quote-form .form-control {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* Custom service picker (replaces native select — no overflow on mobile) */
+.quote-select {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+}
+
+.quote-select-trigger {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 0.9rem;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  min-width: 0;
+}
+
+.quote-select-trigger span:first-child {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.quote-select-trigger:hover,
+.quote-select.is-open .quote-select-trigger {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(30, 161, 182, 0.15);
+}
+
+.quote-select-trigger .material-symbols-outlined {
+  font-size: 22px;
+  color: var(--accent);
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.quote-select.is-open .quote-select-trigger .material-symbols-outlined {
+  transform: rotate(180deg);
+}
+
+.quote-select-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 50;
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  background: #141414;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+  max-height: 220px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.quote-select-option {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #ccc;
+  font-size: 0.88rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.4;
+}
+
+.quote-select-option:hover,
+.quote-select-option.is-selected {
+  background: rgba(30, 161, 182, 0.12);
+  color: #f5f5f5;
+}
+
+@media (max-width: 768px) {
+  .home-quote-card {
+    padding: 28px 20px;
+  }
+
+  .home-quote-form-row > div {
+    min-width: 0;
+  }
+}

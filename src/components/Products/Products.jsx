@@ -52,25 +52,12 @@ const ProductCard = ({ p, i }) => {
   }, []);
 
   return (
-    <div
-      ref={cardRef}
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        height: 420,
-        borderRadius: 12,
-        overflow: 'hidden',
-        border: '1px solid rgba(255,255,255,0.05)',
-        background: '#111',
-        marginBottom: 3,
-      }}
-    >
+    <div ref={cardRef} className="product-card-grid">
       {/* IMAGE — clip-path wipe in from edge */}
       <div
+        className="product-card-img-col"
         style={{
           order: isEven ? 1 : 2,
-          position: 'relative',
-          overflow: 'hidden',
           clipPath: revealed
             ? 'inset(0% 0% 0% 0% round 0px)'
             : isEven
@@ -95,12 +82,9 @@ const ProductCard = ({ p, i }) => {
 
       {/* TEXT — fade + slide in from opposite side */}
       <div
+        className="product-card-text-col"
         style={{
           order: isEven ? 2 : 1,
-          padding: '32px 36px',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
           opacity: revealed ? 1 : 0,
           transform: revealed ? 'translateX(0)' : `translateX(${isEven ? 40 : -40}px)`,
           transition: 'opacity 0.9s ease 0.3s, transform 0.9s cubic-bezier(0.16,1,0.3,1) 0.3s',
@@ -179,8 +163,8 @@ const Products = () => {
   }, []);
 
   return (
-    <section style={{ background: 'var(--bg)', padding: '80px 0' }}>
-      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px' }}>
+    <section className="products-page-section">
+      <div className="products-page-inner">
 
         {/* Section heading with scroll-fill effect */}
         <Reveal variant="up" delay={60} style={{ textAlign: 'center', marginBottom: 48 }}>

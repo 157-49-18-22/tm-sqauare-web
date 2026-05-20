@@ -178,9 +178,13 @@
 }
 
 @media (max-width: 768px) {
+  .paper-page {
+    padding-bottom: 80px;
+  }
+
   .hero-section {
-    min-height: auto;
-    padding: 60px 0;
+    min-height: auto !important;
+    padding: 100px 0 60px !important;
   }
 
   .hero-grid {
@@ -189,7 +193,76 @@
   }
 
   .hero-title {
-    font-size: 40px;
+    font-size: clamp(1.75rem, 7vw, 2.5rem) !important;
+  }
+
+  .hero-desc {
+    font-size: 0.95rem !important;
+    padding: 0 8px;
+  }
+
+  .hero-stats {
+    flex-direction: column !important;
+    gap: 20px !important;
+    align-items: center;
+  }
+
+  .hero-stats .stat-item {
+    border-left: none !important;
+    padding-left: 0 !important;
+    text-align: center;
+  }
+
+  .hero-cta-row {
+    flex-direction: column !important;
+    width: 100%;
+    gap: 12px !important;
+  }
+
+  .hero-cta-row .btn-primary-cyan,
+  .hero-cta-row .btn-outline-cyan {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .catalog-section,
+  .mfg-section,
+  .inquiry-section {
+    padding: 64px 0;
+  }
+
+  .catalog-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .catalog-heading,
+  .paper-section-heading {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+  }
+
+  .metrics-section {
+    padding: 64px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    padding: 88px 0 48px !important;
+  }
+
+  .badge-industrial {
+    font-size: 10px;
+    padding: 4px 10px;
+  }
+
+  .btn-primary-cyan,
+  .btn-outline-cyan {
+    font-size: 14px;
+    padding: 14px 24px;
   }
 }
 
