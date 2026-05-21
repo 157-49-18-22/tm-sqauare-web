@@ -7,14 +7,29 @@ const About = () => {
   const [storySlide, setStorySlide] = useState(0);
   const tlSectionRef = useRef(null);
   const tlTrackRef = useRef(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [lottieLoaded, setLottieLoaded] = useState(false);
   const lottieAnimRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  const timeline = [
+    { year: "2018", title: "The Problem Becomes Clear", desc: "Founders witness how slow RFID activation and fragmented supply chains disrupt transport operations across industrial hubs." },
+    { year: "2019", title: "Concept Takes Shape", desc: "We design a unified platform to bundle RFID FASTag, TPMS, and premium print supplies under one roof." },
+    { year: "2021", title: "Warehouse Integration", desc: "First automated dispatch system launched with fulfillment warehouses in Faridabad and Greater Haryana." },
+    { year: "2023", title: "Official Launch & Scale", desc: "TM Square goes live. Over 50 commercial fleets and print houses adopt the stack for 24/7 supply lines." },
+    { year: "Now", title: "Expansion & Partnerships", desc: "Serving 2,0,000+ customers across India, expanding into real estate and corporate parks." }
+  ];
+
+  const milestoneCenterOffset = 190; // Half of .av-tl-node width (380px)
+  const targetViewportX = isMobile ? (windowWidth / 2) : 790;
+  const startOffset = targetViewportX - milestoneCenterOffset;
+  const spacing = isMobile ? 360 : 550;
+  const totalTravel = spacing * (timeline.length - 1);
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
+      setWindowWidth(window.innerWidth);
     };
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -68,34 +83,51 @@ const About = () => {
     const track = tlTrackRef.current;
     if (!section || !track) return;
 
+    let rafId = null;
+
     const onScroll = () => {
-      const section = tlSectionRef.current;
-      const track = tlTrackRef.current;
-      if (!section || !track) return;
-      const rect = section.getBoundingClientRect();
-      const sectionH = section.offsetHeight;
-      const winH = window.innerHeight;
-      const progress = Math.max(0, Math.min(1, -rect.top / (sectionH - winH)));
-      setScrollProgress(progress);
-      
-      const maxX = track.scrollWidth - window.innerWidth;
-      track.style.transform = `translateX(-${progress * maxX}px)`;
-      // progress bar
-      const bar = document.getElementById('tlProgressBar');
-      if (bar) bar.style.width = `${progress * 100}%`;
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        const currentSection = tlSectionRef.current;
+        const currentTrack = tlTrackRef.current;
+        if (!currentSection || !currentTrack) return;
+        
+        const rect = currentSection.getBoundingClientRect();
+        const sectionH = currentSection.offsetHeight;
+        const winH = window.innerHeight;
+        
+        // Calculate progress (0 to 1) based on sticky section scroll position
+        const progress = Math.max(0, Math.min(1, -rect.top / (sectionH - winH)));
+        
+        // Update horizontal track position (smoothly driven by Lenis scroll)
+        const maxX = currentTrack.scrollWidth - windowWidth;
+        currentTrack.style.transform = `translate3d(-${progress * maxX}px, 0, 0)`;
+        
+        // Update vehicle horizontal position directly in DOM (no React lag!)
+        const vehicle = document.getElementById('lottie-vehicle');
+        if (vehicle) {
+          const vehicleX = startOffset + 190 + progress * totalTravel;
+          vehicle.style.transform = `translate3d(${vehicleX}px, -85%, 0) translate(-50%, 0)`;
+        }
+        
+        // Update progress bar width directly in DOM
+        const bar = document.getElementById('tlProgressBar');
+        if (bar) {
+          bar.style.width = `${progress * 100}%`;
+        }
+      });
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
     // Call once initially to lay out progress correctly
     onScroll();
-    // Also request an animation frame to run once layout dimensions are established
-    const rafId = requestAnimationFrame(onScroll);
 
     return () => {
       window.removeEventListener('scroll', onScroll);
-      cancelAnimationFrame(rafId);
+      if (rafId) cancelAnimationFrame(rafId);
     };
-  }, [isMobile]);
+  }, [isMobile, windowWidth, startOffset, totalTravel]);
 
   const storySlides = [
     { quote: "TM Square started with a simple observation: core business operations—highway tolling, transit safety, and daily documentation—were still running on disjointed systems that couldn't scale.", sub: "Most tools were hard to deploy and even harder to trust at scale." },
@@ -104,13 +136,7 @@ const About = () => {
     { quote: "Serving over 2,00,000 clients across 28+ states, TM Square has become a trusted partner for fleets, corporate offices, and logistics operators nationwide.", sub: "We continue to expand our product lineup and distribution network to serve every corner of India." }
   ];
 
-  const timeline = [
-    { year: "2018", title: "The Problem Becomes Clear", desc: "Founders witness how slow RFID activation and fragmented supply chains disrupt transport operations across industrial hubs." },
-    { year: "2019", title: "Concept Takes Shape", desc: "We design a unified platform to bundle RFID FASTag, TPMS, and premium print supplies under one roof." },
-    { year: "2021", title: "Warehouse Integration", desc: "First automated dispatch system launched with fulfillment warehouses in Faridabad and Greater Haryana." },
-    { year: "2023", title: "Official Launch & Scale", desc: "TM Square goes live. Over 50 commercial fleets and print houses adopt the stack for 24/7 supply lines." },
-    { year: "Now", title: "Expansion & Partnerships", desc: "Serving 2,00,000+ customers across India, expanding into real estate and corporate parks." }
-  ];
+
 
   const teamMembers = [
     { name: "Jason Richter", role: "CEO", img: "/team_ceo.png", desc: "Jason leads the team with over 15 years of supply chain expertise and deep market insights across corporate and industrial sectors." },
@@ -120,9 +146,7 @@ const About = () => {
   ];
 
 
-  const startOffset = isMobile ? 180 : 600;
-  const spacing = isMobile ? 360 : 550;
-  const totalTravel = spacing * (timeline.length - 1);
+
 
   return (
     <div className="av-root">
@@ -225,7 +249,7 @@ const About = () => {
             <div
               className="av-tl-track"
               ref={tlTrackRef}
-              style={{ width: `${startOffset + totalTravel + (isMobile ? 320 : 600)}px` }}
+              style={{ width: `${totalTravel + windowWidth}px` }}
             >
               {/* Continuous horizontal baseline */}
               <div className="av-tl-line"></div>
@@ -234,7 +258,6 @@ const About = () => {
               <div
                 id="lottie-vehicle"
                 className="av-tl-vehicle"
-                style={{ left: `${startOffset + scrollProgress * totalTravel}px` }}
               ></div>
 
               {timeline.map((item, i) => {

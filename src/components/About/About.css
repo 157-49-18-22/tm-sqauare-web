@@ -573,6 +573,7 @@
   justify-content: center;
   overflow: hidden;
   background: #07070a;
+  will-change: transform;
 }
 
 /* Sticky Header - bottom left, exactly like voxr.ai */
@@ -627,15 +628,14 @@
   /* prevent wrapping */
   align-items: center;
   will-change: transform;
-  transition: transform 0.1s cubic-bezier(0.1, 0.8, 0.25, 1);
 }
 
 /* Continuous horizontal baseline */
 .av-tl-line {
   position: absolute;
   left: 0;
-  width: 3500px;
-  /* fixed width guarantees line covers all nodes and doesn't get squished by flex */
+  width: 100%;
+  /* dynamic width matches track container perfectly */
   top: 50%;
   transform: translateY(-50%);
   height: 2px;
@@ -1059,13 +1059,14 @@
 .av-tl-vehicle {
   position: absolute;
   top: 50%;
+  left: 0;
   width: 140px;
   height: 90px;
   z-index: 6;
   pointer-events: none;
-  transform: translate(-50%, -85%);
+  transform: translate3d(0px, -85%, 0) translate(-50%, 0);
   /* position tires perfectly sitting on the baseline */
-  transition: left 0.1s cubic-bezier(0.1, 0.8, 0.25, 1);
+  will-change: transform;
   filter: drop-shadow(0 0 15px rgba(30, 161, 182, 0.4));
 }
 

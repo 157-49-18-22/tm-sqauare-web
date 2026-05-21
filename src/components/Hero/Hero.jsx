@@ -29,6 +29,17 @@ const slides = [
     num: '02',
     img: fastagPlazaHero,
   },
+  {
+    id: 1,
+    badge: 'HYGIENE & PAPER',
+    title: 'MELANIE TISSUE',
+    subtitle: 'PREMIUM TISSUE PRODUCTS',
+    desc: 'Ultra-soft 2-ply and 3-ply tissue sheets designed for premium hygiene. High absorbency, skin-friendly, and perfect for retail and hospitality.',
+    btn: 'Get Quote',
+    page: 'contact',
+    num: '03',
+    img: '/pic.png',
+  },
 ];
 
 const stats = [
@@ -47,9 +58,11 @@ const Hero = () => {
   const [progress, setProgress] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [revealOrigin, setRevealOrigin] = useState('center');
-  const isHoveredRef = useRef(false);
+  
   const wheelLockRef = useRef(false);
-  const slideDuration = 6500;
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
+  const slideDuration = 3500;
 
   const current = slides[active];
 
@@ -63,6 +76,29 @@ const Hero = () => {
     setTimeout(() => {
       setIsTransitioning(false);
     }, 1500);
+  };
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.targetTouches[0].clientX;
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    const diffX = touchStartX.current - touchEndX.current;
+    const threshold = 50;
+    if (Math.abs(diffX) > threshold) {
+      if (diffX > 0) {
+        goTo((active + 1) % slides.length, 'bottom');
+      } else {
+        goTo((active - 1 + slides.length) % slides.length, 'top');
+      }
+    }
+    touchStartX.current = 0;
+    touchEndX.current = 0;
   };
 
   useEffect(() => {
@@ -92,35 +128,40 @@ const Hero = () => {
   }, [active, isTransitioning]);
 
   useEffect(() => {
-    let startTime = Date.now();
     let animFrame;
+    let lastTime = Date.now();
 
     const updateTimer = () => {
-      if (!isHoveredRef.current && !isTransitioning) {
-        const elapsed = Date.now() - startTime;
-        const currentProgress = Math.min((elapsed / slideDuration) * 100, 100);
-        setProgress(currentProgress);
+      if (!isTransitioning) {
+        const now = Date.now();
+        const delta = now - lastTime;
+        lastTime = now;
 
-        if (elapsed >= slideDuration) {
-          goTo((active + 1) % slides.length, 'center');
-          startTime = Date.now();
-        }
+        setProgress((prev) => {
+          const next = prev + (delta / slideDuration) * 100;
+          if (next >= 100) {
+            goTo((active + 1) % slides.length, 'center');
+            return 0;
+          }
+          return next;
+        });
       } else {
-        startTime = Date.now() - (progress / 100) * slideDuration;
+        lastTime = Date.now();
       }
       animFrame = requestAnimationFrame(updateTimer);
     };
 
     animFrame = requestAnimationFrame(updateTimer);
     return () => cancelAnimationFrame(animFrame);
-  }, [active, progress, isTransitioning]);
+  }, [active, isTransitioning]);
 
   return (
     <>
       <section
         className="hero-fullscreen"
-        onMouseEnter={() => { isHoveredRef.current = true; }}
-        onMouseLeave={() => { isHoveredRef.current = false; }}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
         {/* Background slides */}
         <div className="hero-bg-layer">
@@ -155,17 +196,16 @@ const Hero = () => {
                   style={{
                     transform: isActive ? 'scale(1)' : 'scale(1.12)',
                     transition: 'transform 1.5s cubic-bezier(0.77, 0, 0.175, 1), filter 1.5s ease',
-                    filter: isActive ? 'brightness(0.95)' : 'brightness(0.3) blur(10px)',
+                    filter: isActive ? 'none' : 'brightness(0.3) blur(10px)',
                   }}
                 />
-                <div
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background:
-                      'radial-gradient(circle at center, rgba(0,0,0,0.2) 0%, rgba(5,5,5,0.85) 95%), linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 50%, rgba(5,5,5,0.95) 100%)',
-                  }}
-                />
+                {/* Subtle dark tint — no blur, just darkens slightly for text readability */}
+                <div style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'rgba(0, 0, 0, 0.32)',
+                  zIndex: 2,
+                }} />
               </div>
             );
           })}

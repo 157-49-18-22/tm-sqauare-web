@@ -188,9 +188,7 @@ section {
 }
 
 @media (max-width: 768px) {
-  .app-main {
-    padding-top: 88px;
-  }
+  .app-main {}
 }
 
 /* ── Home: Features grid ── */
@@ -264,7 +262,7 @@ section {
     padding: 64px 0 !important;
   }
 
-  .home-quote-grid > * {
+  .home-quote-grid>* {
     min-width: 0;
   }
 }
