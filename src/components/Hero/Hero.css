@@ -47,10 +47,10 @@
   z-index: 6;
   pointer-events: none;
   background: linear-gradient(
-    90deg,
-    rgba(5, 5, 5, 0.7) 0%,
-    rgba(5, 5, 5, 0.3) 35%,
-    transparent 60%
+    to top,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.5) 35%,
+    transparent 80%
   );
 }
 
@@ -66,17 +66,17 @@
   z-index: 10;
   flex: 1 1 auto;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   align-self: stretch;
-  padding: 0 32px 48px;
-  max-width: 1280px;
+  padding: 0 40px 10vh;
+  max-width: 1320px;
   width: 100%;
   margin: 0 auto;
   box-sizing: border-box;
 }
 
 .hero-content {
-  max-width: 560px;
+  max-width: 650px;
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -321,10 +321,10 @@
 
   .hero-left-gradient {
     background: linear-gradient(
-      180deg,
-      rgba(5, 5, 5, 0.35) 0%,
-      rgba(5, 5, 5, 0.1) 40%,
-      rgba(5, 5, 5, 0.75) 100%
+      to top,
+      rgba(0, 0, 0, 0.95) 0%,
+      rgba(0, 0, 0, 0.6) 40%,
+      transparent 80%
     );
   }
 

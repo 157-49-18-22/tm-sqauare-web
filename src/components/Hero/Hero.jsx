@@ -51,6 +51,62 @@ const stats = [
 
 const MARQUEE_ITEMS = ['COPIER PAPER', 'FASTAG RFID', 'PAN INDIA', '24/7 SUPPORT', '₹149 FASTAG', '2L+ CLIENTS', 'RFID CASHLESS'];
 
+const CountUpStat = ({ text }) => {
+  const [val, setVal] = useState(0);
+  const ref = useRef(null);
+  
+  const match = text.match(/([0-9.]+)/);
+  const targetNum = match ? parseFloat(match[1]) : 0;
+  const isFloat = match && match[1].includes('.');
+  const prefix = match ? text.substring(0, match.index) : '';
+  const suffix = match ? text.substring(match.index + match[1].length) : text;
+
+  useEffect(() => {
+    if (!targetNum) return;
+    const el = ref.current;
+    
+    let startTime;
+    let animFrame;
+    const duration = 2000;
+
+    const animate = (time) => {
+      if (!startTime) startTime = time;
+      const progress = Math.min((time - startTime) / duration, 1);
+      const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      setVal(targetNum * easeProgress);
+      if (progress < 1) {
+        animFrame = requestAnimationFrame(animate);
+      } else {
+        setVal(targetNum);
+      }
+    };
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        animFrame = requestAnimationFrame(animate);
+        observer.disconnect();
+      }
+    }, { threshold: 0.1 });
+
+    if (el) observer.observe(el);
+
+    return () => {
+      observer.disconnect();
+      if (animFrame) cancelAnimationFrame(animFrame);
+    };
+  }, [targetNum]);
+
+  if (!targetNum && targetNum !== 0) return <span>{text}</span>;
+
+  return (
+    <span ref={ref}>
+      {prefix}
+      {isFloat ? val.toFixed(1) : Math.floor(val)}
+      {suffix}
+    </span>
+  );
+};
+
 const Hero = () => {
   const navigate = useNavigate();
   const [active, setActive] = useState(0);
@@ -322,7 +378,7 @@ const Hero = () => {
         <div data-reveal-stagger className="hero-stats-grid">
           {stats.map((s, i) => (
             <Reveal key={i} variant="up" className="hero-stat-item">
-              <div className="hero-stat-num">{s.num}</div>
+              <div className="hero-stat-num"><CountUpStat text={s.num} /></div>
               <div className="hero-stat-label">{s.label}</div>
             </Reveal>
           ))}

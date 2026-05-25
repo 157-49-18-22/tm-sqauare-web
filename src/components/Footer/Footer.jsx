@@ -87,13 +87,7 @@ const Footer = () => {
           tabIndex={0}
           onKeyDown={(e) => e.key === 'Enter' && navigate(ROUTES.home)}
         >
-          <div style={{ background:'var(--accent)', width:40, height:40, borderRadius:6, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
-            <span style={{ color:'#fff', fontWeight:900, fontSize:'1rem', fontFamily:"'Bebas Neue',sans-serif", letterSpacing:'0.05em' }}>TM</span>
-          </div>
-          <div>
-            <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.3rem', letterSpacing:'0.12em', color:'#f5f5f5', lineHeight:1 }}>TM SQUARE</div>
-            <div style={{ fontSize:'0.52rem', letterSpacing:'0.25em', color:'var(--accent)', fontWeight:700, lineHeight:1, marginTop:3 }}>GLOBAL SOLUTIONS</div>
-          </div>
+          <img src="/logo1.png" alt="TM Square Logo" style={{ height: '45px', width: 'auto', objectFit: 'contain' }} />
         </div>
 
         <p className="footer-brand-desc">

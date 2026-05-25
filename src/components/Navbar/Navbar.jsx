@@ -64,13 +64,7 @@ const Navbar = ({ cartItemsCount }) => {
       <header className={`tm-navbar ${scrolled ? 'tm-navbar--scrolled' : ''}`}>
         <div className="tm-navbar__inner">
           <div className="tm-navbar__logo" onClick={() => go(ROUTES.home)} role="button" tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && go(ROUTES.home)}>
-            <div className="tm-navbar__logo-icon">
-              <span>TM</span>
-            </div>
-            <div className="tm-navbar__logo-text">
-              <span className="tm-navbar__logo-title">TM SQUARE</span>
-              <span className="tm-navbar__logo-sub">GLOBAL SOLUTIONS</span>
-            </div>
+            <img src="/logo1.png" alt="TM Square Logo" style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
           </div>
 
           <nav className="tm-navbar__nav" aria-label="Main navigation">
