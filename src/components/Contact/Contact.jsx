@@ -120,41 +120,31 @@ const Contact = () => {
                 </div>
               </div>
 
+
+
               <div className="contact-info-card">
                 <div className="contact-icon-wrapper map-icon"><MapPin size={26} /></div>
                 <div>
-                  <h3 className="contact-card-title">Headquarters</h3>
+                  <h3 className="contact-card-title">Corporate Office</h3>
                   <p className="contact-card-text">
-                    Omaxe Spa Village, 702 Aspen D Tower,<br />
-                    Sector 78, Greater Faridabad,<br />
-                    Haryana – 121001
+                    BH-1109, Puri Business Hub, High Street,<br />
+                    Sector-81, Greater Faridabad, Haryana – 121002
                   </p>
                 </div>
               </div>
 
               <div className="contact-info-card">
-          <div className="contact-icon-wrapper map-icon"><MapPin size={26} /></div>
-          <div>
-            <h3 className="contact-card-title">Corporate Office</h3>
-            <p className="contact-card-text">
-              BH-1109, Puri Business Hub, High Street,<br />
-              Sector-81, Greater Faridabad, Haryana – 121002
-            </p>
-          </div>
-        </div>
+                <div className="contact-icon-wrapper map-icon"><MapPin size={26} /></div>
+                <div>
+                  <h3 className="contact-card-title">Registered Office</h3>
+                  <p className="contact-card-text">
+                    Omaxe Spa Village, 702 Aspen D Tower,<br />
+                    Sector 78, Greater Faridabad, Haryana – 121001
+                  </p>
+                </div>
+              </div>
 
-        <div className="contact-info-card">
-          <div className="contact-icon-wrapper map-icon"><MapPin size={26} /></div>
-          <div>
-            <h3 className="contact-card-title">Registered Office</h3>
-            <p className="contact-card-text">
-              Omaxe Spa Village, 702 Aspen D Tower,<br />
-              Sector 78, Greater Faridabad, Haryana – 121001
-            </p>
-          </div>
-        </div>
-
-        <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="whatsapp-btn">
+              <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="whatsapp-btn">
                 <MessageSquare size={20} /> Chat with Us on WhatsApp
               </a>
             </Reveal>
@@ -211,13 +201,13 @@ const Contact = () => {
             <span className="contact-badge">Find Us</span>
             <h2 className="map-title">Our Location</h2>
             <p className="map-subtitle">
-              Omaxe Spa Village, 702 Aspen D Tower, Sector 78, Greater Faridabad, Haryana – 121001
+              2nd Floor, OMAXE WORLD STREET, SCO 30, Sector 79, Faridabad, Haryana – 121004
             </p>
           </Reveal>
           <Reveal variant="image" delay={220} className="map-wrapper">
             <iframe
               title="TM Square Location"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3511.3607505890437!2d77.37!3d28.38!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cdc3c8e06ea69%3A0x9a91f12f1d3a9bcf!2sOmaxe%20Spa%20Village%2C%20Sector%2078%2C%20Faridabad%2C%20Haryana%20121001!5e0!3m2!1sen!2sin!4v1716000000000!5m2!1sen!2sin"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3511.5488623!2d77.3162!3d28.4080!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cdd14b2659a3b%3A0xfce1f1e9d6d9d6c3!2sOmaxe%20World%20Street%2C%20Sector%2079%2C%20Faridabad%2C%20Haryana%20121004!5e0!3m2!1sen!2sin!4v1716000000000!5m2!1sen!2sin"
               width="100%" height="480"
               style={{ border: 0 }} allowFullScreen="" loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
