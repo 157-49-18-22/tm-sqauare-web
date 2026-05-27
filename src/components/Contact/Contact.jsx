@@ -132,7 +132,29 @@ const Contact = () => {
                 </div>
               </div>
 
-              <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="whatsapp-btn">
+              <div className="contact-info-card">
+          <div className="contact-icon-wrapper map-icon"><MapPin size={26} /></div>
+          <div>
+            <h3 className="contact-card-title">Corporate Office</h3>
+            <p className="contact-card-text">
+              BH-1109, Puri Business Hub, High Street,<br />
+              Sector-81, Greater Faridabad, Haryana – 121002
+            </p>
+          </div>
+        </div>
+
+        <div className="contact-info-card">
+          <div className="contact-icon-wrapper map-icon"><MapPin size={26} /></div>
+          <div>
+            <h3 className="contact-card-title">Registered Office</h3>
+            <p className="contact-card-text">
+              Omaxe Spa Village, 702 Aspen D Tower,<br />
+              Sector 78, Greater Faridabad, Haryana – 121001
+            </p>
+          </div>
+        </div>
+
+        <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="whatsapp-btn">
                 <MessageSquare size={20} /> Chat with Us on WhatsApp
               </a>
             </Reveal>
